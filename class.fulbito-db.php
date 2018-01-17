@@ -236,7 +236,7 @@ class fulbitoDB {
                                 jugador.id, jugador.nombre, jugador.lesion, tabla.jugados, tabla.ganados, tabla.empatados, tabla.perdidos, tabla.puntos, tabla.promedio
                                 FROM %s tabla
                                 LEFT JOIN %s jugador ON jugador.id = tabla.jugadorID
-                                WHERE tabla.partidoID = ( SELECT MAX( partidoID ) FROM %s )
+                                WHERE tabla.partidoID = ( SELECT MAX( partidoID ) FROM %s ) AND tabla.jugados > 9
                                 ORDER BY tabla.jugados DESC, tabla.puntos DESC, tabla.ganados DESC",
                                 $this->tables['tabla'], $this->tables['jugadores'], $this->tables['tabla']
                     );
