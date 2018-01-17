@@ -131,7 +131,7 @@ class fulbitoDB {
         $order_promedio = ( $order_promedio ) ? 'tabla.promedio DESC,' : '';
 
         if($partidoID)
-            $sql = sprintf(" SELECT jugador.id, jugador.nombre, jugador.email, jugador.favorito, jugador.activo, partido.suspendido, partido.equipo, IF(partido.partidoID,1,0) AS participa, tabla.promedio
+            $sql = sprintf(" SELECT jugador.id, jugador.nombre, jugador.email, jugador.favorito, jugador.lesion, jugador.activo, partido.suspendido, partido.equipo, IF(partido.partidoID,1,0) AS participa, tabla.promedio
                                 FROM %s AS jugador
                                 LEFT JOIN %s AS partido ON partido.jugadorID = jugador.id AND partido.partidoID = %d
                                 LEFT JOIN %s AS tabla ON tabla.jugadorID = jugador.id AND tabla.partidoID = %d
@@ -233,7 +233,7 @@ class fulbitoDB {
         if( !$calcular ):
 
             $sql = sprintf("    SELECT
-                                jugador.id, jugador.nombre, tabla.jugados, tabla.ganados, tabla.empatados, tabla.perdidos, tabla.puntos, tabla.promedio
+                                jugador.id, jugador.nombre, jugador.lesion, tabla.jugados, tabla.ganados, tabla.empatados, tabla.perdidos, tabla.puntos, tabla.promedio
                                 FROM %s tabla
                                 LEFT JOIN %s jugador ON jugador.id = tabla.jugadorID
                                 WHERE tabla.partidoID = ( SELECT MAX( partidoID ) FROM %s )
