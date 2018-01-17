@@ -1,0 +1,56 @@
+<div class="wrap">
+    <h1>Fulbito Tools</h1>
+    <h3>Tabla de posiciones</h3>
+    <form method="post" action="">
+        <p class="description">(Utilizar esto cuando se cambia el resultado de un partido viejo)</p>
+        <p class="submit">
+            <input class="button button-primary" type='submit' name='regenerar_tabla' value='Regenerar tabla de posiciones' />
+        </p>
+    </form>
+    <hr>
+    <h3>
+        Jugadores
+        <a href="#" class="page-title-action">
+            A&ntilde;adir nuevo
+        </a>
+    </h3>
+    <form method="post" action="">
+        <table class="wp-list-table widefat fixed striped posts">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Favorito</th>
+                    <th scope="col">Activo</th>
+                </tr>
+            </thead>
+            <tbody id="tabla_jugadores">
+                <?php foreach($jugadores as $jugador): ?>
+                    <tr class="editar_fila">
+                        <td>
+                            <span><?php echo($jugador->nombre); ?></span>
+                        </td>
+                        <td class="editable">
+                            <input type="email" name="jugadores[<?php echo $jugador->id; ?>][email]" value="<?php echo($jugador->email); ?>"/>
+                        </td>
+                        <td class="editable">
+                            <select name="jugadores[<?php echo $jugador->id; ?>][favorito]">
+                                <option value="1" <?php if($jugador->favorito) echo 'selected'; ?> >Si</option>
+                                <option value="0" <?php if(!$jugador->favorito) echo 'selected'; ?> >No</option>
+                            </select>
+                        </td>
+                        <td class="editable">
+                            <select name="jugadores[<?php echo $jugador->id; ?>][activo]">
+                                <option value="1" <?php if($jugador->activo) echo 'selected'; ?>>Si</option>
+                                <option value="0" <?php if(!$jugador->activo) echo 'selected'; ?>>No</option>
+                            </select>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <p class="submit">
+            <input class="button button-primary" type='submit' name='editar_jugadores' value='Guardar cambios' />
+        </p>
+    </form>
+</div>

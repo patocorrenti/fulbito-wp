@@ -1,0 +1,33 @@
+<?php if(is_array($tabla)): ?>
+    <table class="ft_tabla_posiciones" width="100%">
+        <thead>
+            <tr>
+                <th class="nombre">Nombre</th>
+                <th class="jugados">J</th>
+                <th class="ganados">G</th>
+                <th class="empatados">E</th>
+                <th class="perdidos">P</th>
+                <th class="puntos">Pts</th>
+                <th class="promedio">Prom.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ( $tabla as $key => $jugador ):?>
+            <tr>
+                <td class="nombre">
+                    <?php echo $jugador->nombre ?>
+                    <?php if($jugador->id == 2): ?>
+                        <i class="fa fa-wheelchair" aria-hidden="true"></i>
+                    <?php endif; ?>
+                </td>
+                <td class="jugados"><?php echo $jugador->jugados ?></td>
+                <td class="ganados"><?php echo $jugador->ganados ?></td>
+                <td class="empatados"><?php echo $jugador->empatados ?></td>
+                <td class="perdidos"><?php echo $jugador->perdidos ?></td>
+                <td class="puntos"><?php echo $jugador->puntos ?></td>
+                <td class="promedio"><?php echo $jugador->promedio ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif;?>
