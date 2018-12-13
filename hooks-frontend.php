@@ -62,13 +62,18 @@ function shortcode_inscripcion() {
 add_shortcode('inscripcion', 'shortcode_inscripcion');
 
 //Shortcode para cargar la ficha de una persona
-function shortcode_ficha() {
+function shortcode_ficha () {
 
     if( isset($_GET['jugador']) && $_GET['jugador'] ):
 
         $jugadorID = (int)$_GET['jugador'];
+
         global $fulbito_data;
+        global $total_partidos;
+
         $jugador_ficha = $fulbito_data->getFichaJugador($jugadorID);
+        $total_partidos = $fulbito_data->getTotalPartidos();
+
         include_once('templates/shortcode-ficha.html');
 
     else:

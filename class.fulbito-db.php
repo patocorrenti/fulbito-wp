@@ -151,9 +151,9 @@ class fulbitoDB {
     function getFichaJugador($jugadorID){
 
         /* data basica */
-        $sql = sprintf('SELECT nombre FROM %s WHERE id = %d;', $this->tables['jugadores'], $jugadorID);
+        $sql = sprintf('SELECT nombre, favorito, lesion FROM %s WHERE id = %d;', $this->tables['jugadores'], $jugadorID);
         $result = $this->wpdb->get_results($sql);
-        $return['nombre'] = $result[0]->nombre;
+        $return['datos'] = $result[0];
 
         /* data de partidos */
         $sql = sprintf('SELECT
@@ -167,10 +167,31 @@ class fulbitoDB {
         $result = $this->wpdb->get_results($sql);
         $return['partidos'] = $result[0];
 
+        /* data de jugadores relacionados */
+        $sql = sprintf('SELECT
+                                eq2.jugadorID id, jug.nombre nombre, COUNT(*) AS cantidad
+                                FROM %s eq1
+                                JOIN %s eq2 ON eq1.partidoID = eq2.partidoID
+                                AND eq1.equipo = eq2.equipo
+                                AND eq1.jugadorID <> eq2.jugadorID
+                                JOIN %s jug ON jug.id = eq2.jugadorID
+                                WHERE eq1.jugadorID = %d
+                                GROUP BY eq2.jugadorID
+                                ORDER BY cantidad DESC;'
+                                ,$this->tables['equipos'], $this->tables['equipos'], $this->tables['jugadores'], $jugadorID
+                        );
+        $result = $this->wpdb->get_results($sql);
+        $return['relacionados'] = $result;
+
         return $return;
 
     }
 
+    function getTotalPartidos(){
+        $sql = sprintf('SELECT COUNT(partidoID) as total FROM wp_fulbito_tools_partidos');
+        $results = $this->wpdb->get_results($sql);
+        return $results[0]->total;
+    }
 
     function getPartido($partidoID){
 

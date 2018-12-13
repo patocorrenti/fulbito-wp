@@ -1,7 +1,38 @@
 <?php if( $jugador_ficha && is_array($jugador_ficha) ): ?>
 
-    <?php print_r($jugador_ficha);?>
-
+  <h2>
+    <?php echo $jugador_ficha['datos']->nombre;?>
+  </h2>
+  <ul>
+    <li>
+      <?php if($jugador_ficha['datos']->lesion): ?>
+          <i class="fa fa-wheelchair" aria-hidden="true"></i>
+          Esta lesionado, si eres <?php echo $jugador_ficha['datos']->nombre;?> por favor visita a tu veterinario.
+      <?php elseif($jugador_ficha['datos']->favorito): ?>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          Todos los lunes ah&iacute; en hora y vestido como corresponde.
+      <?php endif; ?>
+    </li>
+    <li>
+      <?php echo $jugador_ficha['partidos']->jugados;?> de <?php echo $total_partidos; ?> partidos jugados
+      (<?php echo round($jugador_ficha['partidos']->jugados * 100 / $total_partidos);?>%)
+    </li>
+    <li><?php echo $jugador_ficha['partidos']->blanco;?> de blanco y <?php echo $jugador_ficha['partidos']->coco;?> de coco</li>
+    <li><?php echo $jugador_ficha['partidos']->suspensiones;?> suspensiones</li>
+  </ul>
+  <br><br>
+  <h3>Jugaste con:</h3>
+  <ul>
+    <?php foreach($jugador_ficha['relacionados'] as $jugador): if($jugador->cantidad > 10): ?>
+    <li>
+      <a href="<?php bloginfo('url') ?>/ficha/?jugador=<?php echo $jugador->id;?>">
+        <?php echo $jugador->nombre; ?>
+      </a>
+      <?php echo $jugador->cantidad; ?>
+      veces
+    </li>
+    <?php endif; endforeach; ?>
+  </ul>
 <?php else: ?>
     <p>No conozco ese jugador.</p>
 <?php endif; ?>
