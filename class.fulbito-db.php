@@ -233,7 +233,7 @@ class fulbitoDB {
         if( !$calcular ):
 
             $sql = sprintf("    SELECT
-                                jugador.id, jugador.nombre, jugador.lesion, tabla.jugados, tabla.ganados, tabla.empatados, tabla.perdidos, tabla.puntos, tabla.promedio
+                                jugador.id, jugador.nombre, jugador.lesion, jugador.favorito, tabla.jugados, tabla.ganados, tabla.empatados, tabla.perdidos, tabla.puntos, tabla.promedio
                                 FROM %s tabla
                                 LEFT JOIN %s jugador ON jugador.id = tabla.jugadorID
                                 WHERE tabla.partidoID = ( SELECT MAX( partidoID ) FROM %s ) AND tabla.jugados > 9

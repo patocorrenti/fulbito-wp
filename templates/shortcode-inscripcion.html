@@ -144,6 +144,8 @@ if( is_array( $jugadores ) ){
                             <?php print_r($jugador->nombre); ?>
                             <?php if($jugador->lesion): ?>
                                 <i class="fa fa-wheelchair" aria-hidden="true"></i>
+                            <?php elseif($jugador->favorito): ?>
+                                <i class="fa fa-star" aria-hidden="true"></i>
                             <?php endif; ?>
                         </span>
                         <span class="promedio">
