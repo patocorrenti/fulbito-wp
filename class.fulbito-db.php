@@ -188,7 +188,7 @@ class fulbitoDB {
     }
 
     function getTotalPartidos(){
-        $sql = sprintf('SELECT COUNT(partidoID) as total FROM wp_fulbito_tools_partidos');
+        $sql = sprintf('SELECT COUNT(partidoID) as total FROM %s', $this->tables['partidos']);
         $results = $this->wpdb->get_results($sql);
         return $results[0]->total;
     }
