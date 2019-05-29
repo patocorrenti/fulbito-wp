@@ -15,7 +15,7 @@
     </li>
     <li>
       <?php echo $jugador_ficha['partidos']->jugados;?> de <?php echo $total_partidos; ?> partidos jugados
-      (<?php echo round($jugador_ficha['partidos']->jugados * 100 / $total_partidos);?>%)
+      (<?php echo round($jugador_ficha['partidos']->jugados * 100 / (int)$total_partidos);?>%)
     </li>
     <li><?php echo $jugador_ficha['partidos']->blanco;?> de blanco y <?php echo $jugador_ficha['partidos']->coco;?> de coco</li>
     <li><?php echo $jugador_ficha['partidos']->suspensiones;?> suspensiones</li>
