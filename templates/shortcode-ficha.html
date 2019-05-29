@@ -19,7 +19,7 @@
     </li>
     <li>
         <?php echo $jugador_ficha['partidos']->suspensiones;?> suspensiones
-        (<?php echo round( (int)$jugador_ficha['partidos']->suspensiones * 100 / (int)$total_partidos, 2 ) ?>%)
+        (<?php echo round( (int)$jugador_ficha['partidos']->suspensiones * 100 / (int)$jugador_ficha['partidos']->jugados, 2 ) ?>%)
     </li>
     <li><?php echo $jugador_ficha['partidos']->blanco;?> de blanco y <?php echo $jugador_ficha['partidos']->coco;?> de coco</li>
   </ul>
