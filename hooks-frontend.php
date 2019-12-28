@@ -34,8 +34,9 @@ function shortcode_tabla() {
 
     global $fulbito_data;
     $tabla = $fulbito_data->getTabla();
+    ob_start();
     include_once('templates/shortcode-tabla.html');
-
+    return ob_get_clean();
 }
 add_shortcode('tabla_posiciones', 'shortcode_tabla');
 
