@@ -31,17 +31,19 @@ add_action('init', inscribir_jugador);
 
 //Shortcode para cargar la tabla de posiciones
 function shortcode_tabla() {
+    ob_start();
 
     global $fulbito_data;
     $tabla = $fulbito_data->getTabla();
-    ob_start();
     include_once('templates/shortcode-tabla.html');
+
     return ob_get_clean();
 }
 add_shortcode('tabla_posiciones', 'shortcode_tabla');
 
 //Shortcode para inscripcion al partido
 function shortcode_inscripcion() {
+    ob_start();
 
     //tiene que existir un partido creado sin jugar
     global $fulbito_data;
@@ -52,18 +54,19 @@ function shortcode_inscripcion() {
         $partido_query = new WP_Query( $args );
         $jugadores = $fulbito_data->getJugadores( $prox_partido->partidoID, 1 );
         include_once('templates/shortcode-inscripcion.html');
-
     else:
 
         echo '<p>Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.</p>';
 
     endif;
 
+    return ob_get_clean();
 }
 add_shortcode('inscripcion', 'shortcode_inscripcion');
 
 //Shortcode para cargar la ficha de una persona
 function shortcode_ficha () {
+    ob_start();
 
     if( isset($_GET['jugador']) && $_GET['jugador'] ):
 
@@ -81,6 +84,7 @@ function shortcode_ficha () {
         echo "Qu&eacute; ficha?";
     endif;
 
+    return ob_get_clean();
 }
 add_shortcode('ficha_personal', 'shortcode_ficha');
 
