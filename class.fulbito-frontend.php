@@ -53,8 +53,15 @@ class FulbitoFrontend {
 
     public function shortcode_positionsTable() {
         ob_start();
-        $tabla = $this->FulbitoDB->getTabla();
-        include_once('views/frontend/shortcodes/positions-table.php');
+        if (!get_query_var('ft_show_profile')) :
+            $tabla = $this->FulbitoDB->getTabla();
+            include_once('views/frontend/shortcodes/positions-table.php');
+        else :
+            $playerID = get_query_var('ft_show_profile');
+            $jugador_ficha = $this->FulbitoDB->getFichaJugador($playerID);
+            $total_partidos = $this->FulbitoDB->getTotalPartidos();
+            include_once('views/frontend/shortcodes/player-profile.php');
+        endif;
         return ob_get_clean();
     }
 
@@ -86,20 +93,6 @@ class FulbitoFrontend {
         ):
             $this->FulbitoDB->inscribirJugador( (int)$_POST['jugador'], (int)$_POST['partido'] );
         endif;
-    }
-
-    public function shortcode_playerProfile() {
-        ob_start();
-        // FIXME fix use of $_GET!! <- use wp query vars instead
-        if( isset($_GET['jugador']) && $_GET['jugador'] ):
-            $jugadorID = (int)$_GET['jugador'];
-            $jugador_ficha = $this->FulbitoDB->getFichaJugador($jugadorID);
-            $total_partidos = $this->FulbitoDB->getTotalPartidos();
-            include_once('views/frontend/shortcodes/player-profile.php');
-        else:
-            _e('Qu&eacute; ficha?', 'fulbito');
-        endif;
-        return ob_get_clean();
     }
 }
 
