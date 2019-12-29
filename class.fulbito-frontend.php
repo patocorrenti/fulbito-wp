@@ -51,6 +51,30 @@ class FulbitoFrontend {
         return $content;
     }
 
+    public function shortcode_positionsTable() {
+        ob_start();
+        $tabla = $this->FulbitoDB->getTabla();
+        include_once('views/frontend/shortcodes/positions-table.php');
+        return ob_get_clean();
+    }
+
+    public function shortcode_subscriptionForm() {
+        ob_start();
+        // There must be a not-played game
+        $prox_partido = $this->FulbitoDB->getPartidoSinJugar();
+        if( $prox_partido ):
+            $args = array( 'post_type'=>'ft_partidos', 'p'=>$prox_partido->partidoID );
+            $game_query = new WP_Query( $args );
+            $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
+            include_once('views/frontend/shortcodes/subscription-form.php');
+        else:
+            echo '<p>';
+                _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');
+            echo '</p>';
+        endif;
+        return ob_get_clean();
+    }
+
     public function subscribePlayer() {
         // FIXME fix use of $_POST!!! <- use wp query vars instead
         if(
@@ -64,30 +88,6 @@ class FulbitoFrontend {
         endif;
     }
 
-    public function shortcode_positionsTable() {
-        ob_start();
-        $tabla = $this->FulbitoDB->getTabla();
-        include_once('views/shortcodes/positions-table.php');
-        return ob_get_clean();
-    }
-
-    public function shortcode_subscriptionForm() {
-        ob_start();
-        // There must be a not-played game
-        $prox_partido = $this->FulbitoDB->getPartidoSinJugar();
-        if( $prox_partido ):
-            $args = array( 'post_type'=>'ft_partidos', 'p'=>$prox_partido->partidoID );
-            $partido_query = new WP_Query( $args );
-            $jugadores = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
-            include_once('views/shortcodes/subscription-form.php');
-        else:
-            echo '<p>';
-            _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');
-            echo '</p>';
-        endif;
-        return ob_get_clean();
-    }
-
     public function shortcode_playerProfile() {
         ob_start();
         // FIXME fix use of $_GET!! <- use wp query vars instead
@@ -95,7 +95,7 @@ class FulbitoFrontend {
             $jugadorID = (int)$_GET['jugador'];
             $jugador_ficha = $this->FulbitoDB->getFichaJugador($jugadorID);
             $total_partidos = $this->FulbitoDB->getTotalPartidos();
-            include_once('views/shortcodes/player-profile.php');
+            include_once('views/frontend/shortcodes/player-profile.php');
         else:
             _e('Qu&eacute; ficha?', 'fulbito');
         endif;
