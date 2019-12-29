@@ -21,6 +21,9 @@ class FulbitoAdmin {
         // Disable Plugin
         register_deactivation_hook( __FILE__, [$this, 'fulbito_tools_deactivate']);
 
+        // Register query vars
+        add_filter( 'query_vars', [$this, 'registerQueryVars']);
+
         // Create post type partidos
         add_action( 'init', [$this, 'registerPostTypePartidos']);
         // Add settings page on admin menu
@@ -35,12 +38,17 @@ class FulbitoAdmin {
         add_action('delete_post', [$this, 'deleteGameMetadata']);
     }
 
-    public function fulbito_tools_activate(){
+    public function fulbito_tools_activate() {
         $this->FulbitoDB->install();
     }
 
-    function fulbito_tools_deactivate(){
+    function fulbito_tools_deactivate() {
         $this->FulbitoDB->uninstall();
+    }
+
+    public function registerQueryVars($vars) {
+        $vars[] = 'ft_show_profile';
+        return $vars;
     }
 
     public function registerPostTypePartidos() {
@@ -133,7 +141,7 @@ class FulbitoAdmin {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        require_once('views/admin/html-players-list.php');
+        require_once('views/admin/list-players.php');
     }
 
     public function addGameForm($post){
@@ -143,7 +151,7 @@ class FulbitoAdmin {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
-        include_once('views/admin/html-games-form.php');
+        include_once('views/admin/games-form.php');
     }
 
     function enqueueAdminScripts() {

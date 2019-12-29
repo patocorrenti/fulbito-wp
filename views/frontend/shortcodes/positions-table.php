@@ -29,7 +29,7 @@
             <?php foreach ( $tabla as $key => $player ):?>
             <tr>
                 <td class="nombre">
-                    <a href="<?php bloginfo('url') ?>/ficha/?jugador=<?php echo $player->id;?>">
+                    <a href="?ft_show_profile=<?php echo $player->id;?>">
                         <?php echo $player->nombre ?>
                         <?php if($player->lesion): ?>
                             <i class="fa fa-wheelchair" aria-hidden="true"></i>

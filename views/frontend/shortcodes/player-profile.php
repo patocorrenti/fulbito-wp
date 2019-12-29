@@ -42,7 +42,7 @@
     <ul>
         <?php foreach($jugador_ficha['relacionados'] as $jugador): if($jugador->cantidad > 10): ?>
         <li>
-            <a href="<?php bloginfo('url') ?>/ficha/?jugador=<?php echo $jugador->id;?>">
+            <a href="?ft_show_profile=<?php echo $jugador->id;?>">
                 <?php echo $jugador->nombre; ?>
             </a>
             <?php echo sprintf(__('%d veces', 'fulbito'), $jugador->cantidad) ?>
