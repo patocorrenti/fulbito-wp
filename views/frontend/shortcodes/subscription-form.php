@@ -13,8 +13,11 @@ if( is_array( $players ) ){
 <?php while( $game_query->have_posts() ): $game_query->the_post();?>
 
     <!-- DATE -->
-    <?php $date = new DateTime( get_field('fecha', false, false) ); ?>
-    <h2><?php echo $date->format('j M Y'); ?></h2>
+    <?php if ($game->fecha) : ?>
+        <h2>
+            <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
+        </h2>
+    <?php endif ?>
 
     <!-- FORM -->
     <?php if( $inscriptos < 10 ): ?>

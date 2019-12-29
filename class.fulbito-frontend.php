@@ -73,6 +73,7 @@ class FulbitoFrontend {
             $args = array( 'post_type'=>'ft_partidos', 'p'=>$prox_partido->partidoID );
             $game_query = new WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
+            $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
             include_once('views/frontend/shortcodes/subscription-form.php');
         else:
             echo '<p>';

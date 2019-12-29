@@ -16,6 +16,16 @@
             />
         </p>
     </form>
+    <form method="post" action="">
+        <p class="submit">
+            <input
+                class="button button-primary"
+                type='submit'
+                name='migrar_fechas'
+                value='<?php _e('Migrar fechas de ACF a Fulbito', 'fulbito') ?>'
+            />
+        </p>
+    </form>
     <hr>
     <h3>
         <?php _e('Jugadores', 'fulbito') ?>

@@ -1,3 +1,8 @@
+<?php if ($partido->fecha) : ?>
+    <p>
+        <?php echo date_i18n(get_option('date_format'), strtotime($partido->fecha)) ?>
+    </p>
+<?php endif ?>
 <?php if ($partido->resultado) : ?>
 <table width="100%">
     <thead>
