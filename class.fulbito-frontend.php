@@ -46,7 +46,7 @@ class FulbitoFrontend {
         $jugadores = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
         $partido = $this->FulbitoDB->getPartido(get_the_ID())[0];
 
-        include_once('views/frontend/list-game.php');
+        include('views/frontend/list-game.php');
 
         return $content;
     }

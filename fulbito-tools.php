@@ -34,10 +34,8 @@ include_once( 'class.fulbito-db.php' );
 include_once( 'class.fulbito-admin.php' );
 include_once( 'class.fulbito-frontend.php' );
 
-global $fulbito_data;
-$fulbito_data = new FulbitoDB();
-$fulbito_admin = new FulbitoAdmin($fulbito_data);
-$fulbito_frontend = new FulbitoFrontend($fulbito_data);
-
+$FulbitoDB = new FulbitoDB();
+new FulbitoAdmin($FulbitoDB);
+new FulbitoFrontend($FulbitoDB);
 
 ?>
