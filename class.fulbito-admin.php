@@ -133,7 +133,7 @@ class FulbitoAdmin {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        require_once('views/admin/html-players-list.php');
+        require_once('views/admin/list-players.php');
     }
 
     public function addGameForm($post){
@@ -143,7 +143,7 @@ class FulbitoAdmin {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
-        include_once('views/admin/html-games-form.php');
+        include_once('views/admin/games-form.php');
     }
 
     function enqueueAdminScripts() {

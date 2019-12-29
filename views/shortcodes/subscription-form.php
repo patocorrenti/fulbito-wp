@@ -26,12 +26,6 @@ if( is_array( $jugadores ) ){
                                 <i class="fa fa-shield blancoshield" aria-hidden="true"></i>
                                 Blanco
                             </h3>
-                            <?php if( $partido->resultado == 1): ?>
-                                <span class="ganador">
-                                    <i class="fa fa-trophy" aria-hidden="true"></i>
-                                    GANADOR
-                                </span>
-                            <?php endif;?>
                         </header>
                         <ul>
                             <?php $promediosEquipo = array();?>
@@ -68,12 +62,6 @@ if( is_array( $jugadores ) ){
                                 <i class="fa fa-bolt" aria-hidden="true"></i>
                                 Coco
                             </h3>
-                            <?php if( $partido->resultado == 2): ?>
-                                <span class="ganador">
-                                    <i class="fa fa-trophy" aria-hidden="true"></i>
-                                    GANADOR
-                                </span>
-                            <?php endif;?>
                         </header>
                         <ul>
                             <?php foreach ($jugadores as $jugador):  ?>
