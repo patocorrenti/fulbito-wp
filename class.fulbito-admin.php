@@ -80,41 +80,6 @@ class FulbitoAdmin {
                     'supports'           => array( 'title', 'editor')
                 );
         register_post_type( 'ft_partidos', $args );
-
-        // Add Data field if ACF plugin is installed
-        // TODO Make this plugin independent form ACF
-        if (function_exists("register_field_group")) :
-            register_field_group(array (
-                'id' => 'acf_partidos',
-                'title' => 'Partidos',
-                'fields' => array (
-                    array (
-                        'key' => 'field_56afac78c06b5',
-                        'label' => 'Fecha',
-                        'name' => 'fecha',
-                        'type' => 'date_picker',
-                        'required' => 1,
-                        'date_format' => 'yymmdd',
-                        'display_format' => 'dd/mm/yy',
-                        'first_day' => 1,
-                    ),
-                ),
-                'location' => array (
-                    array (
-                        array (
-                            'param' => 'post_type',
-                            'operator' => '==',
-                            'value' => 'ft_partidos',
-                        ),
-                    ),
-                ),
-                'options' => array (
-                    'position' => 'acf_after_title',
-                    'layout' => 'no_box',
-                ),
-                'menu_order' => 0,
-            ));
-        endif;
     }
 
     public function addSettingsPage() {

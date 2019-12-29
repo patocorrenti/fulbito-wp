@@ -3,7 +3,7 @@
 Plugin Name: Fulbito
 Plugin URI:
 Description: Herramientas para tu Fulbito 5
-Version: 1.0
+Version: 0.5
 Author: Pato Correnti
 Author URI: http://patocorrenti.com
 License: GPL2
