@@ -1,15 +1,21 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * FulbitoDB Class
+ *
+ * Handles the plugin tables and SQL queries
+ */
 
-class fulbitoDB {
+class FulbitoDB {
 
     var $wpdb;
     var $tables = array();
 
-    function FulbitoDB(){
-        //recibe el objeto para trabajar base de datos
+    function FulbitoDB() {
+        // Get global object to work with DB
         $this->wpdb = $GLOBALS['wpdb'];
-        //almacena en el objeto las tablas a usar
+        // Table names
         $this->tables['jugadores'] = $this->wpdb->prefix . 'fulbito_tools_jugadores';
         $this->tables['equipos'] = $this->wpdb->prefix . 'fulbito_tools_equipos';
         $this->tables['partidos'] = $this->wpdb->prefix . 'fulbito_tools_partidos';
@@ -18,56 +24,56 @@ class fulbitoDB {
 
     function install(){
 
-        //crea las tablas necesarias para que funcione el plugin
+        // Create plugin tables
 
-        //tabla de jugadores-----
+        // Players
         $sql = sprintf(
             'CREATE TABLE %s ( id INT NOT NULL AUTO_INCREMENT , nombre VARCHAR(100) , email VARCHAR(255) , favorito INT(1) NOT NULL, activo INT(1) NOT NULL , PRIMARY KEY (id) );',
             $this->tables['jugadores']
         );
         $this->wpdb->query($sql);
 
-        //tabla de equipos-----
+        // Teams
         $sql = sprintf(
             'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL , jugadorID INT(11) NOT NULL , equipo INT(1), suspendido INT(1), PRIMARY KEY (partidoID, jugadorID) );',
             $this->tables['equipos']
         );
         $this->wpdb->query($sql);
 
-        //tabla de partidos-----
+        // Games
         $sql = sprintf(
             'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL , resultado INT(1), color_equipo_1 INT(6), color_equipo_2 INT(6), PRIMARY KEY (partidoID) );',
             $this->tables['partidos']
         );
         $this->wpdb->query($sql);
 
-        //tabla de tabla de posiciones-----
+        // Positions table
         $sql = sprintf(
             'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL, jugadorID INT NOT NULL, jugados INT(5), ganados INT(5), empatados INT(5), perdidos INT(5), puntos INT(10), promedio FLOAT(10) );',
             $this->tables['tabla']
         );
         $this->wpdb->query($sql);
 
-        //regenero las tablas, si hubiese partidos
+        // Regenerate tables (in case there are played games)
         $this->regenerarTablas();
     }
 
     function uninstall(){
-        //borro las tablas
+        // Delete the tables
         foreach($this->tables as $table):
             $sql = sprintf( "DROP TABLE %s", $table );
             //$this->wpdb->query($sql);
         endforeach;
     }
 
-    //edita los jugadores, recibe un post
+    // Edit players
     function editJugadores($form_post){
         foreach($form_post['jugadores'] as $key=>$jugador_data):
             $this->wpdb->update( $this->tables['jugadores'], $jugador_data, array( 'id' => $key ) );
         endforeach;
     }
 
-    //salva un partido (disparado por un save de post type partido)
+    // salva un partido (disparado por un save de post type partido)
     function salvarPartido( $postID, $post ){
 
         //Guardo los jugadores en cada equipo o como participantes
