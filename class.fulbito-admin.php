@@ -16,6 +16,11 @@ class FulbitoAdmin {
 
         $this->FulbitoDB = $FulbitoDB;
 
+        // Enable Plugin
+        register_activation_hook( __FILE__, [$this, 'fulbito_tools_activate']);
+        // Disable Plugin
+        register_deactivation_hook( __FILE__, [$this, 'fulbito_tools_deactivate']);
+
         // Create post type partidos
         add_action( 'init', [$this, 'registerPostTypePartidos']);
         // Add settings page on admin menu
@@ -28,7 +33,14 @@ class FulbitoAdmin {
         add_action('save_post', [$this, 'saveGameMetadata']);
         // Delete metadata for partidos
         add_action('delete_post', [$this, 'deleteGameMetadata']);
+    }
 
+    public function fulbito_tools_activate(){
+        $this->FulbitoDB->install();
+    }
+
+    function fulbito_tools_deactivate(){
+        $this->FulbitoDB->uninstall();
     }
 
     public function registerPostTypePartidos() {

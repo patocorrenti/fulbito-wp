@@ -30,26 +30,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-require_once( 'class.fulbito-db.php' );
-require_once('class.fulbito-admin.php');
+include_once( 'class.fulbito-db.php' );
+include_once('class.fulbito-admin.php');
 
 global $fulbito_data;
 $fulbito_data = new FulbitoDB();
 $fulbito_admin = new FulbitoAdmin($fulbito_data);
 
-//ACTIVAR plugin ---------------------
-register_activation_hook( __FILE__, 'fulbito_tools_activate' );
-function fulbito_tools_activate(){
-    global $fulbito_data;
-    $fulbito_data->install();
-}
-
-//DESACTIVAR plugin ---------------------
-register_deactivation_hook( __FILE__, 'fulbito_tools_deactivate' );
-function fulbito_tools_deactivate(){
-    global $fulbito_data;
-    $fulbito_data->uninstall();
-}
 
 include_once('hooks-frontend.php');
 
