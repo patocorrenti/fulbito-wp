@@ -3,17 +3,19 @@
         <?php echo $jugador_ficha['datos']->nombre;?>
     </h2>
     <ul>
-        <li>
-            <?php if($jugador_ficha['datos']->lesion): ?>
+        <?php if($jugador_ficha['datos']->lesion): ?>
+            <li>
                 <i class="fa fa-wheelchair" aria-hidden="true"></i>
                 <?php
                     echo sprintf(__('Esta lesionado, si eres %s por favor visita a tu veterinario.', 'fulbito'), $jugador_ficha['datos']->nombre )
                 ?>
-            <?php elseif($jugador_ficha['datos']->favorito): ?>
+            </li>
+        <?php elseif($jugador_ficha['datos']->favorito): ?>
+            <li>
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <?php _e('Todos los lunes ah&iacute; en hora y vestido como corresponde.', 'fulbito') ?>
-            <?php endif; ?>
-        </li>
+            </li>
+        <?php endif; ?>
         <li>
             <?php
                 echo sprintf(__('%d de %d partidos jugados', 'fulbito'), $jugador_ficha['partidos']->jugados, $total_partidos)
