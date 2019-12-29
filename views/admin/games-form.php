@@ -2,6 +2,14 @@
 <table id="partido_fields" width="100%">
     <tbody>
         <tr>
+            <td colspan="3">
+                <h3>
+                    <?php _e('Fecha', 'fulbito') ?>
+                </h3>
+                <input type="date" name="fecha" value="<?php echo $game->fecha ?>"/>
+            </td>
+        </tr>
+        <tr>
             <td width="33%" style="vertical-align: top;">
                 <input type="hidden" name="testing" value="4">
                 <h3>

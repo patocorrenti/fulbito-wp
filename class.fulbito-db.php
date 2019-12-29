@@ -42,7 +42,7 @@ class FulbitoDB {
 
         // Games
         $sql = sprintf(
-            'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL , resultado INT(1), color_equipo_1 INT(6), color_equipo_2 INT(6), PRIMARY KEY (partidoID) );',
+            'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL, fecha date DEFAULT NULL, resultado INT(1), color_equipo_1 INT(6), color_equipo_2 INT(6), PRIMARY KEY (partidoID) );',
             $this->tables['partidos']
         );
         $this->wpdb->query($sql);
@@ -107,7 +107,10 @@ class FulbitoDB {
         $this->wpdb->query($sql);
 
         //Guardo los metadatos del partido
-        $this->wpdb->replace( $this->tables['partidos'], array( 'partidoID' => $postID, 'resultado' => (int)$post['resultado'] ) );
+        $this->wpdb->replace(
+            $this->tables['partidos'], //table
+            ['partidoID' => $postID, 'fecha' => $post['fecha'], 'resultado' => (int)$post['resultado']] //data
+        );
 
         //Actualizo la tabla de posiciones
         $this->salvarTabla($postID);
@@ -201,7 +204,7 @@ class FulbitoDB {
 
     function getPartido($partidoID){
 
-        $sql = sprintf( 'SELECT resultado, color_equipo_1, color_equipo_2 FROM %s WHERE partidoID = %d', $this->tables['partidos'], $partidoID );
+        $sql = sprintf( 'SELECT resultado, fecha, color_equipo_1, color_equipo_2 FROM %s WHERE partidoID = %d', $this->tables['partidos'], $partidoID );
         $results = $this->wpdb->get_results($sql);
         return $results;
     }
@@ -314,6 +317,28 @@ class FulbitoDB {
             $this->salvarTabla($r->id);
     }
 
+    /* Migrate dates from ACF (old method) to Fulbito */
+    function datesACF2Fulbito(){
+
+        // Select all games
+        $games = new WP_Query(['post_type' => 'ft_partidos', 'posts_per_page' => -1]);
+        if (!$games->have_posts()) return;
+        while ($games->have_posts()) : $games->the_post();
+
+            // Get the ACF date and format it for Fulbito
+            if (!get_field('fecha')) continue;
+            $date = DateTime::createFromFormat('Ymd', get_field('fecha'));
+            $fulbitoFormat = $date->format('Y-m-d');
+
+            // Store the date in Fulbito DB
+            $this->wpdb->update(
+                $this->tables['partidos'], // table
+                ['fecha' => $fulbitoFormat], // data
+                ['partidoID' => get_the_ID()] // where
+            );
+
+        endwhile;
+    }
 
 }
 

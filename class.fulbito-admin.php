@@ -139,6 +139,10 @@ class FulbitoAdmin {
         if( isset($_POST['regenerar_tabla']) && $_POST['regenerar_tabla'] )
             $this->FulbitoDB->regenerarTablas();
 
+        // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
+        if( isset($_POST['migrar_fechas']) && $_POST['migrar_fechas'] )
+            $this->FulbitoDB->datesACF2Fulbito();
+
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
         require_once('views/admin/list-players.php');
