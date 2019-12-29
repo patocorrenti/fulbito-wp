@@ -7,6 +7,8 @@ Version: 0.01
 Author: Pato Correnti
 Author URI: http://patocorrenti.com
 License: GPL2
+Text Domain: fulbito
+Domain Path: /i18n/languages/
 
 Copyright 2016 PatoCorrenti  (email : patocorrenti@gmail.com)
 
@@ -24,10 +26,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-include_once( 'class.fulbito-db.php' );
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+require_once( 'class.fulbito-db.php' );
+require_once('class.fulbito-admin.php');
 
 global $fulbito_data;
-$fulbito_data = new fulbitoDB();
+$fulbito_data = new FulbitoDB();
+$fulbito_admin = new FulbitoAdmin($fulbito_data);
 
 
 //FIXME*1: este script deberia cargarse solo al administrar post tipo partidos
@@ -51,8 +59,8 @@ function fulbito_tools_deactivate(){
     $fulbito_data->uninstall();
 }
 
-include_once('hooks-admin.php');
 include_once('hooks-frontend.php');
+
 
 
 //crea el post type "Partidos" ---------------------
