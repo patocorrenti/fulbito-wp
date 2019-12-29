@@ -36,10 +36,9 @@
             ?>
         </li>
     </ul>
-    <br><br>
-    <h3>
+    <h4>
         <?php _e('Jugaste con', 'fulbito') ?>:
-    </h3>
+    </h4>
     <ul>
         <?php foreach($jugador_ficha['relacionados'] as $jugador): if($jugador->cantidad > 10): ?>
         <li>

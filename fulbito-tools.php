@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Fulbito Tools
+Plugin Name: Fulbito
 Plugin URI:
-Description: Herramientas para tu fulbito 5
-Version: 0.01
+Description: Herramientas para tu Fulbito 5
+Version: 1.0
 Author: Pato Correnti
 Author URI: http://patocorrenti.com
 License: GPL2
