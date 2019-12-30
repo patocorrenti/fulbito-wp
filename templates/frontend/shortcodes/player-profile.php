@@ -1,3 +1,10 @@
+<?php
+    defined( 'ABSPATH' ) or exit();
+
+    $playerID = $templateArgs['playerID'];
+    $jugador_ficha = $templateArgs['jugador_ficha'];
+    $total_partidos = $templateArgs['total_partidos'];
+?>
 <?php if( $jugador_ficha && is_array($jugador_ficha) ): ?>
     <h2>
         <?php echo $jugador_ficha['datos']->nombre;?>

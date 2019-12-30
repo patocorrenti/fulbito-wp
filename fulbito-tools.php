@@ -31,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 include_once( 'class.fulbito-db.php' );
+include_once( 'class.fulbito-commons.php' );
 include_once( 'class.fulbito-admin.php' );
 include_once( 'class.fulbito-frontend.php' );
 

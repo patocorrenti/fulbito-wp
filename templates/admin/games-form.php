@@ -1,4 +1,9 @@
+<?php
+    defined( 'ABSPATH' ) or exit();
 
+    $game = $templateArgs['game'];
+    $players = $templateArgs['players'];
+?>
 <table id="partido_fields" width="100%">
     <tbody>
         <tr>

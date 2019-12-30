@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  */
 
-class FulbitoFrontend {
+class FulbitoFrontend extends FulbitoCommons {
 
     var $FulbitoDB;
 
@@ -31,10 +31,9 @@ class FulbitoFrontend {
     public function addSingleGameMetadata($content) {
         if(is_admin() || !is_singular('ft_partidos')) return $content;
 
-        $jugadores = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
-        $partido = $this->FulbitoDB->getPartido(get_the_ID())[0];
-
-        include_once('views/frontend/single-game.php');
+        $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
+        $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
+        $this->ft_get_template('frontend/single-game', ['players' => $players, 'game' => $game]);
 
         return $content;
     }
@@ -43,10 +42,9 @@ class FulbitoFrontend {
         global $post;
         if(is_admin() || is_singular() || $post->post_type !== 'ft_partidos'  ) return $content;
 
-        $jugadores = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
-        $partido = $this->FulbitoDB->getPartido(get_the_ID())[0];
-
-        include('views/frontend/list-game.php');
+        $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
+        $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
+        $this->ft_get_template('frontend/list-game', ['players' => $players, 'game' => $game]);
 
         return $content;
     }
@@ -55,12 +53,15 @@ class FulbitoFrontend {
         ob_start();
         if (!get_query_var('ft_show_profile')) :
             $tabla = $this->FulbitoDB->getTabla();
-            include_once('views/frontend/shortcodes/positions-table.php');
+            $this->ft_get_template('frontend/shortcodes/positions-table', ['tabla' => $tabla]);
         else :
             $playerID = get_query_var('ft_show_profile');
             $jugador_ficha = $this->FulbitoDB->getFichaJugador($playerID);
             $total_partidos = $this->FulbitoDB->getTotalPartidos();
-            include_once('views/frontend/shortcodes/player-profile.php');
+            $this->ft_get_template(
+                'frontend/shortcodes/player-profile',
+                ['playerID' => $playerID, 'jugador_ficha' => $jugador_ficha, 'total_partidos' => $total_partidos]
+            );
         endif;
         return ob_get_clean();
     }
@@ -74,7 +75,10 @@ class FulbitoFrontend {
             $game_query = new WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
             $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
-            include_once('views/frontend/shortcodes/subscription-form.php');
+            $this->ft_get_template(
+                'frontend/shortcodes/subscription-form',
+                ['game_query' => $game_query, 'players' => $players, 'game' => $game]
+            );
         else:
             echo '<p>';
                 _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');

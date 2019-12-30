@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  */
 
-class FulbitoAdmin {
+class FulbitoAdmin extends FulbitoCommons {
 
     var $FulbitoDB;
 
@@ -57,7 +57,7 @@ class FulbitoAdmin {
                     'singular_name'      => _x( 'Partido', 'post type singular name', 'fulbito' ),
                     'menu_name'          => _x( 'Partidos', 'admin menu', 'fulbito' ),
                     'name_admin_bar'     => _x( 'Partidos', 'add new on admin bar', 'fulbito' ),
-                    'add_new'            => __( 'A&ntilde;adir nuevo', 'fulbito' ),
+                    'add_new'            => __( 'A&ntilde;adir partido', 'fulbito' ),
                     'add_new_item'       => __( 'A&ntilde;adir nuevo partido', 'fulbito' ),
                     'new_item'           => __( 'Nueva partido', 'fulbito' ),
                     'edit_item'          => __( 'Editar partido', 'fulbito' ),
@@ -110,7 +110,7 @@ class FulbitoAdmin {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        require_once('views/admin/list-players.php');
+        $this->ft_get_template('admin/list-players', ['players' => $players]);
     }
 
     public function addGameForm($post){
@@ -120,7 +120,7 @@ class FulbitoAdmin {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
-        include_once('views/admin/games-form.php');
+        $this->ft_get_template('admin/games-form', ['players' => $players, 'game' => $game]);
     }
 
     function enqueueAdminScripts() {

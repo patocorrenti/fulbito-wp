@@ -1,4 +1,11 @@
 <?php
+    defined( 'ABSPATH' ) or exit();
+
+    $game_query = $templateArgs['game_query'];
+    $players = $templateArgs['players'];
+    $game = $templateArgs['game'];
+?>
+<?php
 // Totals
 $inscriptos = 0;
 $equipados  = 0;

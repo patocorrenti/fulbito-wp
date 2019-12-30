@@ -1,31 +1,10 @@
-<?php defined( 'ABSPATH' ) or exit(); ?>
+<?php
+    defined( 'ABSPATH' ) or exit();
 
+    $players = $templateArgs['players'];
+?>
 <div class="wrap">
     <h1><?php _e('Configuraci&oacute;n', 'fulbito') ?></h1>
-    <h3><?php _e('Tabla de posiciones', 'fulbito') ?></h3>
-    <form method="post" action="">
-        <p class="description">
-            (<?php _e('Utilizar esto cuando se cambia el resultado de un partido viejo', 'fulbito') ?>)
-        </p>
-        <p class="submit">
-            <input
-                class="button button-primary"
-                type='submit'
-                name='regenerar_tabla'
-                value='<?php _e('Regenerar tabla de posiciones', 'fulbito') ?>'
-            />
-        </p>
-    </form>
-    <form method="post" action="">
-        <p class="submit">
-            <input
-                class="button button-primary"
-                type='submit'
-                name='migrar_fechas'
-                value='<?php _e('Migrar fechas de ACF a Fulbito', 'fulbito') ?>'
-            />
-        </p>
-    </form>
     <hr>
     <h3>
         <?php _e('Jugadores', 'fulbito') ?>
@@ -90,6 +69,30 @@
         </table>
         <p class="submit">
             <input class="button button-primary" type='submit' name='editar_jugadores' value='<?php _e('Guardar cambios', 'fulbito') ?>' />
+        </p>
+    </form>
+    <h3><?php _e('Tabla de posiciones', 'fulbito') ?></h3>
+    <form method="post" action="">
+        <p class="description">
+            (<?php _e('Utilizar esto cuando se cambia el resultado de un partido viejo', 'fulbito') ?>)
+        </p>
+        <p class="submit">
+            <input
+                class="button button-primary"
+                type='submit'
+                name='regenerar_tabla'
+                value='<?php _e('Regenerar tabla de posiciones', 'fulbito') ?>'
+            />
+        </p>
+    </form>
+    <form method="post" action="">
+        <p class="submit">
+            <input
+                class="button button-primary"
+                type='submit'
+                name='migrar_fechas'
+                value='<?php _e('Migrar fechas de ACF a Fulbito', 'fulbito') ?>'
+            />
         </p>
     </form>
 </div>

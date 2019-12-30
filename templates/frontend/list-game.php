@@ -1,19 +1,25 @@
-<?php if ($partido->fecha) : ?>
+<?php
+    defined( 'ABSPATH' ) or exit();
+
+    $game = $templateArgs['game'];
+    $players = $templateArgs['players'];
+?>
+<?php if ($game->fecha) : ?>
     <p>
-        <?php echo date_i18n(get_option('date_format'), strtotime($partido->fecha)) ?>
+        <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
     </p>
 <?php endif ?>
-<?php if ($partido->resultado) : ?>
+<?php if ($game->resultado) : ?>
 <table width="100%">
     <thead>
         <tr>
-            <?php if( $partido->resultado == 1) : ?>
+            <?php if( $game->resultado == 1) : ?>
                 <th><?php _e('Ganador', 'fulbito') ?></th>
                 <th></th>
-            <?php elseif( $partido->resultado == 2 ) : ?>
+            <?php elseif( $game->resultado == 2 ) : ?>
                 <th></th>
                 <th><?php _e('Ganador', 'fulbito') ?></th>
-            <?php elseif( $partido->resultado == 3 ) : ?>
+            <?php elseif( $game->resultado == 3 ) : ?>
                 <th colspan="2"><?php _e('Empate', 'fulbito') ?></th>
             <?php endif ?>
         </tr>
@@ -22,12 +28,12 @@
         <tr>
             <td width="50%">
                 <ul>
-                <?php foreach ($jugadores as $jugador): ?>
-                    <?php if($jugador->equipo == 1 && $jugador->participa ): ?>
+                <?php foreach ($players as $player): ?>
+                    <?php if($player->equipo == 1 && $player->participa ): ?>
                     <li>
-                        <?php echo $jugador->nombre; ?>
-                        <?php echo ($jugador->promedio) ? '('.$jugador->promedio.')' : ''; ?>
-                        <?php if($jugador->suspendido): ?>
+                        <?php echo $player->nombre; ?>
+                        <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
+                        <?php if($player->suspendido): ?>
                             <div>
                                 <?php _e('Suspendido', 'fulbito') ?>
                             </div>
@@ -39,12 +45,12 @@
             </td>
             <td width="50%">
                 <ul>
-                    <?php foreach ($jugadores as $jugador): ?>
-                        <?php if($jugador->equipo == 2 && $jugador->participa ): ?>
+                    <?php foreach ($players as $player): ?>
+                        <?php if($player->equipo == 2 && $player->participa ): ?>
                         <li>
-                            <?php echo $jugador->nombre; ?>
-                            <?php echo ($jugador->promedio) ? '('.$jugador->promedio.')' : ''; ?>
-                            <?php if($jugador->suspendido): ?>
+                            <?php echo $player->nombre; ?>
+                            <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
+                            <?php if($player->suspendido): ?>
                                 <div>
                                     <?php _e('Suspendido', 'fulbito') ?>
                                 </div>

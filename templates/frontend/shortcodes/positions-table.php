@@ -1,3 +1,8 @@
+<?php
+    defined( 'ABSPATH' ) or exit();
+
+    $tabla = $templateArgs['tabla'];
+?>
 <?php if(is_array($tabla)): ?>
     <table class="ft_tabla_posiciones" width="100%">
         <thead>
