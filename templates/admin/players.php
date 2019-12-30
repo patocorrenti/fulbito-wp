@@ -4,14 +4,13 @@
     $players = $templateArgs['players'];
 ?>
 <div class="wrap">
-    <h1><?php _e('Configuraci&oacute;n', 'fulbito') ?></h1>
-    <hr>
-    <h3>
+    <h1>
         <?php _e('Jugadores', 'fulbito') ?>
         <a href="#" class="page-title-action">
             <?php _e('A&ntilde;adir nuevo', 'fulbito') ?>
         </a>
-    </h3>
+    </h1>
+    <br>
     <form method="post" action="">
         <table class="wp-list-table widefat fixed striped posts">
             <thead>
@@ -106,14 +105,5 @@
         <input type="hidden" name="ft_action" value="ft_edit_players" />
         <?php wp_nonce_field( 'ft_edit_players'); ?>
         <?php submit_button( __('Guardar cambios', 'fulbito') ); ?>
-    </form>
-    <h3><?php _e('Tabla de posiciones', 'fulbito') ?></h3>
-    <form method="post" action="">
-        <p class="description">
-            (<?php _e('Utilizar esto cuando se cambia el resultado de un partido viejo', 'fulbito') ?>)
-        </p>
-        <input type="hidden" name="ft_action" value="ft_regenerar_tabla" />
-        <?php wp_nonce_field( 'ft_regenerar_tabla'); ?>
-        <?php submit_button( __('Regenerar tabla de posiciones', 'fulbito') ); ?>
     </form>
 </div>

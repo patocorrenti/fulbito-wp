@@ -26,6 +26,8 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Create post type partidos
         add_action( 'init', [$this, 'registerPostTypePartidos']);
+        // Add players page on admin menu
+        add_action('admin_menu', [$this, 'addPlayersPage']);
         // Add settings page on admin menu
         add_action('admin_menu', [$this, 'addSettingsPage']);
         // Add custom fields to partidos custom post
@@ -48,7 +50,6 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function registerQueryVars($vars) {
         $vars[] = 'ft_show_profile';
-        $vars[] = 'ft_action';
         return $vars;
     }
 
@@ -83,29 +84,48 @@ class FulbitoAdmin extends FulbitoCommons {
         register_post_type( 'ft_partidos', $args );
     }
 
-    public function addSettingsPage() {
-        add_menu_page(
-            __('Fulbito Settings', 'fulbito'), // Page title
-            __('Fulbito', 'fulbito'), // Menu title
-            'administrator', // User role
-            'fulbito-tools', // Page slug
-            array($this, 'settingsPage'), //function
-            'dashicons-admin-generic', // Icon_url
-            6 // Position
+    public function addPlayersPage() {
+        add_submenu_page(
+            'edit.php?post_type=ft_partidos',
+            __('Jugadores | Fulbito', 'fulbito'), // Page title
+            __('Jugadores', 'fulbito'), // Menu title
+            'edit_posts', // Capability
+            'players', // Page slug
+            array($this, 'playersPage'), //function
+            4 // Position
         );
     }
 
-    public function settingsPage() {
+    public function playersPage() {
         // Players edition
         if( $_POST['ft_action'] === 'ft_edit_players' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_edit_players'))
             $this->FulbitoDB->editJugadores($_POST);
 
+        // Show players list
+        $players = $this->FulbitoDB->getJugadores();
+        $this->ft_get_template('admin/players', ['players' => $players]);
+    }
+
+    public function addSettingsPage() {
+        add_submenu_page(
+            'edit.php?post_type=ft_partidos',
+            __('Opciones | Fulbito', 'fulbito'), // Page title
+            __('Opciones', 'fulbito'), // Menu title
+            'edit_posts', // Capability
+            'options', // Page slug
+            array($this, 'settingsPage'), //function
+            5 // Position
+        );
+    }
+
+    public function settingsPage() {
+        // Table regeneration
         if( $_POST['ft_action'] === 'ft_regenerar_tabla' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_regenerar_tabla') )
             $this->FulbitoDB->regenerarTablas();
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        $this->ft_get_template('admin/list-players', ['players' => $players]);
+        $this->ft_get_template('admin/settings', ['players' => $players]);
     }
 
     public function addGameForm($post){
