@@ -6,10 +6,33 @@
 <div class="wrap">
     <h1>
         <?php _e('Jugadores', 'fulbito') ?>
-        <a href="#" class="page-title-action">
+        <a href="#" onclick="jQuery('#add-player-form').show();" class="page-title-action">
             <?php _e('A&ntilde;adir nuevo', 'fulbito') ?>
         </a>
     </h1>
+    <div id="add-player-form" style="display: none;">
+        <br><hr>
+        <form method="post" action="">
+            <h3><?php _e('Nuevo jugador', 'fulbito') ?></h3>
+            <table class="form-table">
+                <tbody>
+                    <tr class="user-user-login-wrap">
+                        <th>
+                            <label for="user_login"><?php _e('Nombre', 'fulbito') ?></label>
+                        </th>
+                        <td>
+                            <input type="text" name="nombre" id="add_player_name" class="regular-text" required>
+                            <span class="description"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="ft_action" value="ft_add_player" />
+            <?php wp_nonce_field( 'ft_add_player'); ?>
+            <?php submit_button( __('A&ntilde;adir', 'fulbito') ); ?>
+        </form>
+        <hr>
+    </div>
     <br>
     <form method="post" action="">
         <table class="wp-list-table widefat fixed striped posts">

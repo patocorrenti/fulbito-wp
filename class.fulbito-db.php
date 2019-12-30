@@ -98,6 +98,15 @@ class FulbitoDB {
     }
 
     // Edit players
+    function addJugador($name){
+        $this->wpdb->insert(
+                        $this->tables['jugadores'],
+                        array( 'nombre' => $name),
+                        array( '%s' )
+                    );
+    }
+
+    // Edit players
     function editJugadores($form_post){
         foreach($form_post['jugadores'] as $key=>$jugador_data):
             if (

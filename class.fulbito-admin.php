@@ -97,6 +97,10 @@ class FulbitoAdmin extends FulbitoCommons {
     }
 
     public function playersPage() {
+        // Add new player
+        if( $_POST['ft_action'] === 'ft_add_player' && strlen($_POST['nombre']) > 2 && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_add_player'))
+            $this->FulbitoDB->addJugador(esc_sql($_POST['nombre']));
+
         // Players edition
         if( $_POST['ft_action'] === 'ft_edit_players' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_edit_players'))
             $this->FulbitoDB->editJugadores($_POST);
