@@ -48,6 +48,7 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function registerQueryVars($vars) {
         $vars[] = 'ft_show_profile';
+        $vars[] = 'ft_action';
         return $vars;
     }
 
@@ -88,25 +89,19 @@ class FulbitoAdmin extends FulbitoCommons {
             __('Fulbito', 'fulbito'), // Menu title
             'administrator', // User role
             'fulbito-tools', // Page slug
-            array($this, 'settingsPageTemplate'), //function
+            array($this, 'settingsPage'), //function
             'dashicons-admin-generic', // Icon_url
             6 // Position
         );
     }
 
-    public function settingsPageTemplate() {
+    public function settingsPage() {
         // Players edition
-        // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
-        if( isset($_POST['editar_jugadores']) && $_POST['editar_jugadores'] == 'Guardar cambios' )
+        if( $_POST['ft_action'] === 'ft_edit_players' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_edit_players'))
             $this->FulbitoDB->editJugadores($_POST);
 
-        // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
-        if( isset($_POST['regenerar_tabla']) && $_POST['regenerar_tabla'] )
+        if( $_POST['ft_action'] === 'ft_regenerar_tabla' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_regenerar_tabla') )
             $this->FulbitoDB->regenerarTablas();
-
-        // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
-        if( isset($_POST['migrar_fechas']) && $_POST['migrar_fechas'] )
-            $this->FulbitoDB->datesACF2Fulbito();
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
@@ -123,16 +118,17 @@ class FulbitoAdmin extends FulbitoCommons {
         $this->ft_get_template('admin/games-form', ['players' => $players, 'game' => $game]);
     }
 
-    function enqueueAdminScripts() {
-        wp_enqueue_script( 'fulbitojs', plugins_url('assets/js/fulbito-tools.js', __FILE__) , array( 'jquery' ) );
-    }
-
     public function saveGameMetadata($postId) {
         global $post;
         if ($post->post_type != 'ft_partidos') return;
 
         // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
-        $this->FulbitoDB->salvarPartido( $postId, $_POST );
+        if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
+            $this->FulbitoDB->salvarPartido( $postId, $_POST );
+    }
+
+    function enqueueAdminScripts() {
+        wp_enqueue_script( 'fulbitojs', plugins_url('assets/js/fulbito-tools.js', __FILE__) , array( 'jquery' ) );
     }
 
     public function deleteGameMetadata( $postId ) {

@@ -130,3 +130,4 @@
         </tr>
     </tbody>
 </table>
+ <?php wp_nonce_field( 'ft_game_metadata', 'ftnonce'); ?>

@@ -40,6 +40,7 @@ if( is_array( $players ) ){
                 <?php endif; endforeach; ?>
             </select>
             <br>
+            <?php wp_nonce_field( 'ft_subscribe_player') ?>
             <input type="submit" name="inscribir" value="<?php _e('Inscribir', 'fulbito') ?>">
         </form>
     <?php else: ?>

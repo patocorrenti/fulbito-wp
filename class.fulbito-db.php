@@ -28,28 +28,59 @@ class FulbitoDB {
 
         // Players
         $sql = sprintf(
-            'CREATE TABLE %s ( id INT NOT NULL AUTO_INCREMENT , nombre VARCHAR(100) , email VARCHAR(255) , favorito INT(1) NOT NULL, activo INT(1) NOT NULL , PRIMARY KEY (id) );',
+            'CREATE TABLE %s (
+                id INT NOT NULL AUTO_INCREMENT
+                , nombre VARCHAR(100)
+                , email VARCHAR(255)
+                , nacimiento date DEFAULT NULL
+                , favorito INT(1) NOT NULL
+                , lesion INT(1) NOT NULL
+                , activo INT(1) NOT NULL
+                , PRIMARY KEY (id) )
+            ;',
             $this->tables['jugadores']
         );
         $this->wpdb->query($sql);
 
         // Teams
         $sql = sprintf(
-            'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL , jugadorID INT(11) NOT NULL , equipo INT(1), suspendido INT(1), PRIMARY KEY (partidoID, jugadorID) );',
+            'CREATE TABLE %s (
+                partidoID BIGINT(20) NOT NULL
+                , jugadorID INT(11) NOT NULL
+                , equipo INT(1)
+                , suspendido INT(1)
+                , PRIMARY KEY (partidoID, jugadorID) )
+            ;',
             $this->tables['equipos']
         );
         $this->wpdb->query($sql);
 
         // Games
         $sql = sprintf(
-            'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL, fecha date DEFAULT NULL, resultado INT(1), color_equipo_1 INT(6), color_equipo_2 INT(6), PRIMARY KEY (partidoID) );',
+            'CREATE TABLE %s (
+                partidoID BIGINT(20) NOT NULL
+                , fecha date DEFAULT NULL
+                , resultado INT(1)
+                , color_equipo_1 INT(6)
+                , color_equipo_2 INT(6)
+                , PRIMARY KEY (partidoID)
+            );',
             $this->tables['partidos']
         );
         $this->wpdb->query($sql);
 
         // Positions table
         $sql = sprintf(
-            'CREATE TABLE %s ( partidoID BIGINT(20) NOT NULL, jugadorID INT NOT NULL, jugados INT(5), ganados INT(5), empatados INT(5), perdidos INT(5), puntos INT(10), promedio FLOAT(10) );',
+            'CREATE TABLE %s (
+                partidoID BIGINT(20) NOT NULL
+                , jugadorID INT NOT NULL
+                , jugados INT(5)
+                , ganados INT(5)
+                , empatados INT(5)
+                , perdidos INT(5)
+                , puntos INT(10)
+                , promedio FLOAT(10)
+            );',
             $this->tables['tabla']
         );
         $this->wpdb->query($sql);
@@ -69,6 +100,15 @@ class FulbitoDB {
     // Edit players
     function editJugadores($form_post){
         foreach($form_post['jugadores'] as $key=>$jugador_data):
+            if (
+                !$jugador_data['nombre']
+                || ($jugador_data['email'] && !filter_var($jugador_data['email'], FILTER_VALIDATE_EMAIL))
+                || strlen($jugador_data['favorito'] > 1)
+                || strlen($jugador_data['lesion'] > 1)
+                || strlen($jugador_data['activo'] > 1)
+            ) {
+                continue;
+            }
             $this->wpdb->update( $this->tables['jugadores'], $jugador_data, array( 'id' => $key ) );
         endforeach;
     }
@@ -140,7 +180,7 @@ class FulbitoDB {
         $order_promedio = ( $order_promedio ) ? 'tabla.promedio DESC,' : '';
 
         if($partidoID)
-            $sql = sprintf(" SELECT jugador.id, jugador.nombre, jugador.email, jugador.favorito, jugador.lesion, jugador.activo, partido.suspendido, partido.equipo, IF(partido.partidoID,1,0) AS participa, tabla.promedio
+            $sql = sprintf(" SELECT jugador.id, jugador.nombre, jugador.email, jugador.nacimiento, jugador.favorito, jugador.lesion, jugador.activo, partido.suspendido, partido.equipo, IF(partido.partidoID,1,0) AS participa, tabla.promedio
                                 FROM %s AS jugador
                                 LEFT JOIN %s AS partido ON partido.jugadorID = jugador.id AND partido.partidoID = %d
                                 LEFT JOIN %s AS tabla ON tabla.jugadorID = jugador.id AND tabla.partidoID = %d
@@ -149,7 +189,7 @@ class FulbitoDB {
                                 $this->tables['jugadores'], $this->tables['equipos'], $partidoID, $this->tables['tabla'], $partidoID, $order_promedio
                             );
         else
-            $sql = sprintf( "SELECT id, nombre, email, favorito, activo FROM %s ORDER BY favorito DESC, nombre ASC;", $this->tables['jugadores'] );
+            $sql = sprintf( " SELECT id, nombre, email, nacimiento, favorito, lesion, activo FROM %s ORDER BY nombre ASC;", $this->tables['jugadores'] );
 
         $results = $this->wpdb->get_results($sql);
 
@@ -315,29 +355,6 @@ class FulbitoDB {
 
         foreach($results as $r)
             $this->salvarTabla($r->id);
-    }
-
-    /* Migrate dates from ACF (old method) to Fulbito */
-    function datesACF2Fulbito(){
-
-        // Select all games
-        $games = new WP_Query(['post_type' => 'ft_partidos', 'posts_per_page' => -1]);
-        if (!$games->have_posts()) return;
-        while ($games->have_posts()) : $games->the_post();
-
-            // Get the ACF date and format it for Fulbito
-            if (!get_field('fecha')) continue;
-            $date = DateTime::createFromFormat('Ymd', get_field('fecha'));
-            $fulbitoFormat = $date->format('Y-m-d');
-
-            // Store the date in Fulbito DB
-            $this->wpdb->update(
-                $this->tables['partidos'], // table
-                ['fecha' => $fulbitoFormat], // data
-                ['partidoID' => get_the_ID()] // where
-            );
-
-        endwhile;
     }
 
 }

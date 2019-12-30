@@ -17,13 +17,22 @@
             <thead>
                 <tr>
                     <th scope="col">
+                        <?php _e('ID', 'fulbito') ?>
+                    </th>
+                    <th scope="col">
                         <?php _e('Nombre', 'fulbito') ?>
                     </th>
                     <th scope="col">
                         <?php _e('Email', 'fulbito') ?>
                     </th>
                     <th scope="col">
+                        <?php _e('Nacimiento', 'fulbito') ?>
+                    </th>
+                    <th scope="col">
                         <?php _e('Favorito', 'fulbito') ?>
+                    </th>
+                    <th scope="col">
+                        <?php _e('Lesi&oacute;n', 'fulbito') ?>
                     </th>
                     <th scope="col">
                         <?php _e('Activo', 'fulbito') ?>
@@ -34,7 +43,17 @@
                 <?php foreach($players as $player): ?>
                     <tr class="editar_fila">
                         <td>
-                            <span><?php echo($player->nombre); ?></span>
+                            <span>
+                                <?php echo $player->id ?>
+                            </span>
+                        </td>
+                        <td class="editable">
+                            <input
+                                type="text"
+                                name="jugadores[<?php echo $player->id; ?>][nombre]"
+                                value="<?php echo($player->nombre); ?>"
+                                required
+                            />
                         </td>
                         <td class="editable">
                             <input
@@ -44,11 +63,28 @@
                             />
                         </td>
                         <td class="editable">
+                            <input
+                                type="date"
+                                name="jugadores[<?php echo $player->id; ?>][nacimiento]"
+                                value="<?php echo($player->nacimiento); ?>"
+                            />
+                        </td>
+                        <td class="editable">
                             <select name="jugadores[<?php echo $player->id; ?>][favorito]">
                                 <option value="1" <?php if($player->favorito) echo 'selected'; ?> >
                                     <?php _e('Si', 'fulbito') ?>
                                 </option>
                                 <option value="0" <?php if(!$player->favorito) echo 'selected'; ?> >
+                                    <?php _e('No', 'fulbito') ?>
+                                </option>
+                            </select>
+                        </td>
+                        <td class="editable">
+                            <select name="jugadores[<?php echo $player->id; ?>][lesion]">
+                                <option value="1" <?php if($player->lesion) echo 'selected'; ?> >
+                                    <?php _e('Si', 'fulbito') ?>
+                                </option>
+                                <option value="0" <?php if(!$player->lesion) echo 'selected'; ?> >
                                     <?php _e('No', 'fulbito') ?>
                                 </option>
                             </select>
@@ -67,32 +103,17 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <p class="submit">
-            <input class="button button-primary" type='submit' name='editar_jugadores' value='<?php _e('Guardar cambios', 'fulbito') ?>' />
-        </p>
+        <input type="hidden" name="ft_action" value="ft_edit_players" />
+        <?php wp_nonce_field( 'ft_edit_players'); ?>
+        <?php submit_button( __('Guardar cambios', 'fulbito') ); ?>
     </form>
     <h3><?php _e('Tabla de posiciones', 'fulbito') ?></h3>
     <form method="post" action="">
         <p class="description">
             (<?php _e('Utilizar esto cuando se cambia el resultado de un partido viejo', 'fulbito') ?>)
         </p>
-        <p class="submit">
-            <input
-                class="button button-primary"
-                type='submit'
-                name='regenerar_tabla'
-                value='<?php _e('Regenerar tabla de posiciones', 'fulbito') ?>'
-            />
-        </p>
-    </form>
-    <form method="post" action="">
-        <p class="submit">
-            <input
-                class="button button-primary"
-                type='submit'
-                name='migrar_fechas'
-                value='<?php _e('Migrar fechas de ACF a Fulbito', 'fulbito') ?>'
-            />
-        </p>
+        <input type="hidden" name="ft_action" value="ft_regenerar_tabla" />
+        <?php wp_nonce_field( 'ft_regenerar_tabla'); ?>
+        <?php submit_button( __('Regenerar tabla de posiciones', 'fulbito') ); ?>
     </form>
 </div>
