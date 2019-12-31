@@ -14,7 +14,6 @@ class FulbitoCommons {
         $themePath = get_template_directory() . '/fulbito/' . $templatePath . '.php';
         // In house template path
         $fullPath =  'templates/' . $templatePath . '.php';
-
         include( file_exists($themePath) ? $themePath : $fullPath );
     }
 

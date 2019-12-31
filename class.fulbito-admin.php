@@ -73,6 +73,8 @@ class FulbitoAdmin extends FulbitoCommons {
                     'publicly_queryable' => true,
                     'show_ui'            => true,
                     'show_in_menu'       => true,
+                    'show_in_rest'       => true,
+                    'rest_base'          => 'games',
                     'query_var'          => true,
                     'rewrite'            => array( 'slug' => 'partidos' ),
                     'has_archive'        => true,
@@ -107,7 +109,9 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
+        ob_start();
         $this->ft_get_template('admin/players', ['players' => $players]);
+        return ob_get_clean();
     }
 
     public function addSettingsPage() {
@@ -129,7 +133,9 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
+        ob_start();
         $this->ft_get_template('admin/settings', ['players' => $players]);
+        return ob_get_clean();
     }
 
     public function addGameForm($post){
@@ -139,7 +145,9 @@ class FulbitoAdmin extends FulbitoCommons {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
+        ob_start();
         $this->ft_get_template('admin/games-form', ['players' => $players, 'game' => $game]);
+        return ob_get_clean();
     }
 
     public function saveGameMetadata($postId) {

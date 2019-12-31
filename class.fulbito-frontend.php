@@ -21,9 +21,8 @@ class FulbitoFrontend extends FulbitoCommons {
         // Game - lists - Add metadata
         add_filter( 'the_content', [$this, 'addListsGameMetadata']);
         // Add shortcodes
-        add_shortcode('tabla_posiciones', [$this,'shortcode_positionsTable']);
-        add_shortcode('inscripcion', [$this,'shortcode_subscriptionForm']);
-        add_shortcode('ficha_personal', [$this,'shortcode_playerProfile']);
+        add_shortcode('fulbito_tabla', [$this,'shortcode_positionsTable']);
+        add_shortcode('fulbito_inscripcion', [$this,'shortcode_subscriptionForm']);
         // Subscribe player from frontend subscription form
         add_action('init', [$this, 'subscribePlayer']);
     }
@@ -33,9 +32,10 @@ class FulbitoFrontend extends FulbitoCommons {
 
         $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
         $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
+        ob_start();
         $this->ft_get_template('frontend/single-game', ['players' => $players, 'game' => $game]);
 
-        return $content;
+        return $content . ob_get_clean();
     }
 
     public function addListsGameMetadata($content) {
@@ -44,30 +44,32 @@ class FulbitoFrontend extends FulbitoCommons {
 
         $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
         $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
+        ob_start();
         $this->ft_get_template('frontend/list-game', ['players' => $players, 'game' => $game]);
 
-        return $content;
+        return $content . ob_get_clean();
     }
 
     public function shortcode_positionsTable() {
-        ob_start();
         if (!get_query_var('ft_show_profile')) :
             $tabla = $this->FulbitoDB->getTabla();
+            ob_start();
             $this->ft_get_template('frontend/shortcodes/positions-table', ['tabla' => $tabla]);
+            return ob_get_clean();
         else :
             $playerID = get_query_var('ft_show_profile');
             $jugador_ficha = $this->FulbitoDB->getFichaJugador($playerID);
             $total_partidos = $this->FulbitoDB->getTotalPartidos();
+            ob_start();
             $this->ft_get_template(
                 'frontend/shortcodes/player-profile',
                 ['playerID' => $playerID, 'jugador_ficha' => $jugador_ficha, 'total_partidos' => $total_partidos]
             );
+            return ob_get_clean();
         endif;
-        return ob_get_clean();
     }
 
     public function shortcode_subscriptionForm() {
-        ob_start();
         // There must be a not-played game
         $prox_partido = $this->FulbitoDB->getPartidoSinJugar();
         if( $prox_partido ):
@@ -75,16 +77,17 @@ class FulbitoFrontend extends FulbitoCommons {
             $game_query = new WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
             $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
+            ob_start();
             $this->ft_get_template(
                 'frontend/shortcodes/subscription-form',
                 ['game_query' => $game_query, 'players' => $players, 'game' => $game]
             );
+            return ob_get_clean();
         else:
             echo '<p>';
                 _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');
             echo '</p>';
         endif;
-        return ob_get_clean();
     }
 
     public function subscribePlayer() {
