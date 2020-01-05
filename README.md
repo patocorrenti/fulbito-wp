@@ -22,3 +22,15 @@ Wordpress plugin for organizing and tracking the Futbol 5 you play with your fri
 - Activate the plugin
 
 Fulbito works with any Wordpress theme.
+
+## Getting started
+Fulbito will create a new post type called "Games"
+- Create players (you'll need at least 10)
+- Create a game
+  - Select 10 participants
+  - Create 2 teams manually or with an automatic algorithm
+- When the game is done you can load the result and the suspensions
+
+## Shortcodes
+- `[fulbito_tabla]` position table and players profile
+- `[fulbito_inscripcion]` public subscription form
