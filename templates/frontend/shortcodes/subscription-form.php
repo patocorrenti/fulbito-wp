@@ -16,19 +16,19 @@ if( is_array( $players ) ){
     }
 }
 ?>
-
+<div class="fulbito subscription">
 <?php while( $game_query->have_posts() ): $game_query->the_post();?>
 
     <!-- DATE -->
     <?php if ($game->fecha) : ?>
-        <h2>
+        <h2 class="date">
             <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
         </h2>
     <?php endif ?>
 
     <!-- FORM -->
     <?php if( $inscriptos < 10 ): ?>
-        <form action="" method="post">
+        <form action="" method="post" class="subscription-form">
             <input type="hidden" name="validancia" value="">
             <input type="hidden" name="partido" value="<?php echo get_the_ID(); ?>" >
             <label for="jugador">Jugador:</label>
@@ -44,7 +44,7 @@ if( is_array( $players ) ){
             <input type="submit" name="inscribir" value="<?php _e('Inscribir', 'fulbito') ?>">
         </form>
     <?php else: ?>
-        <p>
+        <p class="closed">
             <?php _e('La inscripci&oacute;n cerr&oacute;, te quedaste afuera.', 'fulbito') ?>
         </p>
     <?php endif;?>
@@ -52,9 +52,9 @@ if( is_array( $players ) ){
     <!-- COMPLETED -->
     <?php if( $inscriptos === 10 ):?>
         <?php if( $equipados === 10 ): ?>
-            <h4><?php _e('Equipos', 'fulbito') ?></h4>
-            <table>
-                <thead>
+            <h4 class="teams-title"><?php _e('Equipos', 'fulbito') ?></h4>
+            <table class="team_table">
+                <thead class="header">
                     <tr>
                         <th width="50%">
                             <?php _e('Equipo A (Blanco)', 'fulbito') ?>
@@ -68,20 +68,13 @@ if( is_array( $players ) ){
                     <tr>
                         <td>
                             <?php $promediosEquipo = array();?>
-                            <ul>
+                            <ul class="team_detail">
                                 <?php foreach ($players as $player): ?>
                                     <?php if($player->equipo == 1 && $player->participa ): ?>
                                         <?php $promediosEquipo[0][] = $player->promedio; ?>
                                         <li>
-                                            <span><?php echo $player->nombre; ?></span>
-                                            <?php if($player->suspendido): ?>
-                                                <span>
-                                                    <i class="fa fa-ban" aria-hidden="true"></i>
-                                                </span>
-                                            <?php endif;?>
-                                            <span>
-                                                <?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>
-                                            </span>
+                                            <?php echo $player->nombre; ?>
+                                            (<?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>)
                                         </li>
                                     <?php endif; ?>
                                 <?php endforeach ?>
@@ -92,26 +85,19 @@ if( is_array( $players ) ){
                             if( count($promediosEquipo[0]) ):
                                 $prom_equipo = array_sum($promediosEquipo[0])/count($promediosEquipo[0]);
                             ?>
-                                <p>
+                                <p class="team_average">
                                     <?php echo number_format((float)$prom_equipo, 2, '.', ''); ?>
                                 </p>
                             <?php endif; ?>
                         </td>
                         <td>
-                            <ul>
+                            <ul class="team_detail">
                                 <?php foreach ($players as $player):  ?>
                                     <?php if($player->equipo == 2 && $player->participa ): ?>
                                         <?php $promediosEquipo[1][] = $player->promedio; ?>
                                         <li>
-                                            <span><?php echo $player->nombre; ?></span>
-                                            <?php if($player->suspendido): ?>
-                                                <span>
-                                                    <i class="fa fa-ban" aria-hidden="true"></i>
-                                                </span>
-                                            <?php endif;?>
-                                            <span>
-                                                <?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>
-                                            </span>
+                                            <?php echo $player->nombre; ?>
+                                            (<?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>)
                                         </li>
                                     <?php endif; ?>
                                 <?php endforeach ?>
@@ -122,7 +108,7 @@ if( is_array( $players ) ){
                             if( count($promediosEquipo[1]) ):
                                 $prom_equipo = array_sum($promediosEquipo[1])/count($promediosEquipo[1]);
                             ?>
-                                <p>
+                                <p class="team_average">
                                     <?php echo number_format((float)$prom_equipo, 2, '.', ''); ?>
                                 </p>
                             <?php endif; ?>
@@ -131,7 +117,7 @@ if( is_array( $players ) ){
                 </tbody>
             </table>
         <?php else: ?>
-            <p>
+            <p class="no_teams">
                <?php _e('No hay equipos todav&iacute;a.', 'fulbito') ?>
             </p>
         <?php endif;?>
@@ -139,29 +125,24 @@ if( is_array( $players ) ){
 
     <!-- SUBSCRIPTORS LIST -->
     <?php if( $inscriptos && $equipados !== 10 ) : ?>
-        <h4>Inscriptos (<?php echo $inscriptos;?>)</h4>
-        <ul>
+        <h4 class="subscriptors-title">Inscriptos (<?php echo $inscriptos;?>)</h4>
+        <ul class="subscriptors-list">
             <?php foreach($players as $player): if( $player->participa ):  ?>
                 <li>
-                    <span>
-                        <?php print_r($player->nombre); ?>
-                        <?php if($player->lesion): ?>
-                            <i class="fa fa-wheelchair" aria-hidden="true"></i>
-                        <?php elseif($player->favorito): ?>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        <?php endif; ?>
-                    </span>
-                    <span>
-                        <?php print_r($player->promedio); ?>
-                    </span>
+                    <?php print_r($player->nombre); ?>
+                    <?php if($player->lesion): ?>
+                        <i class="fa fa-wheelchair" aria-hidden="true"></i>
+                    <?php elseif($player->favorito): ?>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    <?php endif; ?>
+                    (<?php print_r($player->promedio); ?>)
                 </li>
             <?php $total ++; endif; endforeach;?>
         </ul>
     <?php elseif( !$inscriptos ) : ?>
-        <p>
+        <p class="no_subscriptors">
             <?php _e('No hay inscriptos todav&iacute;a', 'fulbito') ?>
-        <p>
+        </p>
     <?php endif; ?>
-
-
 <?php endwhile;?>
+</div>

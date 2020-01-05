@@ -4,14 +4,15 @@
     $game = $templateArgs['game'];
     $players = $templateArgs['players'];
 ?>
+<div class="fulbito teams single">
 <?php if ($game->fecha) : ?>
-    <p>
+    <p class="date">
         <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
     </p>
 <?php endif ?>
 <?php if ($game->resultado) : ?>
-<table width="100%">
-    <thead>
+<table width="100%" class="team_table">
+    <thead class="header">
         <tr>
             <?php if( $game->resultado == 1) : ?>
                 <th><?php _e('Ganador', 'fulbito') ?></th>
@@ -27,16 +28,14 @@
     <tbody>
         <tr>
             <td width="50%">
-                <ul>
+                <ul class="team_detail">
                 <?php foreach ($players as $player): ?>
                     <?php if($player->equipo == 1 && $player->participa ): ?>
                     <li>
                         <?php echo $player->nombre; ?>
                         <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
                         <?php if($player->suspendido): ?>
-                            <div>
-                                <?php _e('Suspendido', 'fulbito') ?>
-                            </div>
+                            <i class="fas fa-ban"></i>
                         <?php endif;?>
                     </li>
                     <?php endif; ?>
@@ -44,16 +43,14 @@
                 </ul>
             </td>
             <td width="50%">
-                <ul>
+                <ul class="team_detail">
                     <?php foreach ($players as $player): ?>
                         <?php if($player->equipo == 2 && $player->participa ): ?>
                         <li>
                             <?php echo $player->nombre; ?>
                             <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
                             <?php if($player->suspendido): ?>
-                                <div>
-                                    <?php _e('Suspendido', 'fulbito') ?>
-                                </div>
+                                <i class="fas fa-ban"></i>
                             <?php endif;?>
                         </li>
                         <?php endif; ?>
@@ -64,7 +61,8 @@
     </tbody>
 </table>
 <?php else : ?>
-    <p>
+    <p class="not_played">
         <?php _e('Este partido a&uacute;n no se jug&oacute;', 'fulbito') ?>
     </p>
 <?php endif; ?>
+</div>

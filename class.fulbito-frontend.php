@@ -16,6 +16,8 @@ class FulbitoFrontend extends FulbitoCommons {
 
         $this->FulbitoDB = $FulbitoDB;
 
+        add_action( 'wp_enqueue_scripts', [$this,'enqueue_scripts']);
+
         // Game - single - Add metadata
         add_filter( 'the_content', [$this, 'addSingleGameMetadata']);
         // Game - lists - Add metadata
@@ -25,6 +27,10 @@ class FulbitoFrontend extends FulbitoCommons {
         add_shortcode('fulbito_inscripcion', [$this,'shortcode_subscriptionForm']);
         // Subscribe player from frontend subscription form
         add_action('init', [$this, 'subscribePlayer']);
+    }
+
+    public function enqueue_scripts() {
+        wp_enqueue_script( 'fontsAwesome', plugins_url('assets/vendor/fontsawesome/js/all.min.js', __FILE__));
     }
 
     public function addSingleGameMetadata($content) {

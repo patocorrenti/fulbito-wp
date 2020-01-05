@@ -26,6 +26,8 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Create post type partidos
         add_action( 'init', [$this, 'registerPostTypePartidos']);
+        // Disable Gutenberg Editor for partidos
+        add_filter( 'use_block_editor_for_post_type', [$this,'disableGutenberg'], 10, 2);
         // Add players page on admin menu
         add_action('admin_menu', [$this, 'addPlayersPage']);
         // Add settings page on admin menu
@@ -86,6 +88,16 @@ class FulbitoAdmin extends FulbitoCommons {
         register_post_type( 'ft_partidos', $args );
     }
 
+    public function disableGutenberg( $current_status, $post_type ) {
+        // Disabled post types
+        $disabled_post_types = array( 'ft_partidos');
+        // Change $can_edit to false for any post types in the disabled post types array
+        if ( in_array( $post_type, $disabled_post_types, true ) ) {
+            $current_status = false;
+        }
+        return $current_status;
+    }
+
     public function addPlayersPage() {
         add_submenu_page(
             'edit.php?post_type=ft_partidos',
@@ -109,9 +121,7 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        ob_start();
         $this->ft_get_template('admin/players', ['players' => $players]);
-        return ob_get_clean();
     }
 
     public function addSettingsPage() {
@@ -133,9 +143,7 @@ class FulbitoAdmin extends FulbitoCommons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        ob_start();
         $this->ft_get_template('admin/settings', ['players' => $players]);
-        return ob_get_clean();
     }
 
     public function addGameForm($post){
@@ -145,9 +153,7 @@ class FulbitoAdmin extends FulbitoCommons {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
-        ob_start();
         $this->ft_get_template('admin/games-form', ['players' => $players, 'game' => $game]);
-        return ob_get_clean();
     }
 
     public function saveGameMetadata($postId) {
@@ -170,3 +176,5 @@ class FulbitoAdmin extends FulbitoCommons {
         $this->FulbitoDB->deletePartido( $postId );
     }
 }
+
+

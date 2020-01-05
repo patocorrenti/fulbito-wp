@@ -24,7 +24,7 @@
                     <button class="button button-secondary" id="seleccionar_favoritos">
                         <?php _e('Seleccionar favoritos', 'fulbito') ?>
                     </button>
-                    <div style="max-height: 400px; overflow-y: auto;">
+                    <div style="max-height: 550px; overflow-y: auto;">
                         <?php foreach($players as $player): ?>
                             <p>
                                 <label for="<?php echo 'participa_'.$player->id ?>">
@@ -50,39 +50,13 @@
                         <?php _e('Participantes', 'fulbito') ?>:
                         <span id="participantes_total">0</span>
                     </p>
-                    <button class="button button-secondary" disabled id="boton_promediar_simple">
-                        <?php _e('Mezclar Promediando (algoritmo simple)', 'fulbito') ?>:
-                    </button><br>
-                    <button class="button button-secondary" disabled id="boton_promediar">
-                        <?php _e('Mezclar Promediando (algoritmo pro)', 'fulbito') ?>:
-                    </button><br>
-                    <button class="button button-secondary" disabled id="boton_mezclar">
-                        <?php _e('Mezclar Random', 'fulbito') ?>:
-                    </button>
                 </fieldset>
             </td>
             <td width="33%" style="vertical-align: top;">
-                <h3>
-                    <?php _e('Equipos', 'fulbito') ?>
-                </h3>
-                <label for="resultado">
-                    <?php _e('Resultado', 'fulbito') ?>
-                </label>
-                <select name="resultado" id="resultado">
-                    <option value="0" <?php if($game->resultado == 0) echo 'selected'; ?> >
-                        <?php _e('Sin jugar', 'fulbito') ?>
-                    </option>
-                    <option value="3" <?php if($game->resultado == 3) echo 'selected'; ?> >
-                        <?php _e('Empate', 'fulbito') ?>
-                    </option>
-                    <option value="1" <?php if($game->resultado == 1) echo 'selected'; ?> >
-                        <?php _e('Gan&oacute; Equipo A (Blanco)', 'fulbito') ?>
-                    </option>
-                    <option value="2" <?php if($game->resultado == 2) echo 'selected'; ?> >
-                        <?php _e('Gan&oacute; Equipo B (Coco)', 'fulbito') ?>
-                    </option>
-                </select>
                 <fieldset id="equipos">
+                    <h3>
+                        <?php _e('Equipos', 'fulbito') ?>
+                    </h3>
                     <h2>
                         <?php _e('Equipo A (Blanco)', 'fulbito') ?>
                         <ol id="equipo_a_combo">
@@ -104,8 +78,41 @@
                         </ol>
                     </h2>
                 </fieldset>
+                <fieldset>
+                    <h3>
+                        <?php _e('Autoarmado', 'fulbito') ?>
+                    </h3>
+                    <button class="button button-primary" disabled id="boton_promediar" style="margin-bottom: 5px;">
+                        <?php _e('Promediando (RECOMENDADO)', 'fulbito') ?>
+                    </button><br>
+                    <button class="button button-secondary" disabled id="boton_promediar_simple" style="margin-bottom: 5px;">
+                        <?php _e('Promediando (algoritmo simple)', 'fulbito') ?>
+                    </button><br>
+                    <button class="button button-secondary" disabled id="boton_mezclar" style="margin-bottom: 5px;">
+                        <?php _e('Random', 'fulbito') ?>
+                    </button>
+                </fieldset>
             </td>
             <td width="33%" style="vertical-align: top;">
+                <fieldset>
+                    <h3>
+                        <?php _e('Resultado', 'fulbito') ?>
+                    </h3>
+                    <select name="resultado" id="resultado">
+                        <option value="0" <?php if($game->resultado == 0) echo 'selected'; ?> >
+                            <?php _e('Sin jugar', 'fulbito') ?>
+                        </option>
+                        <option value="3" <?php if($game->resultado == 3) echo 'selected'; ?> >
+                            <?php _e('Empate', 'fulbito') ?>
+                        </option>
+                        <option value="1" <?php if($game->resultado == 1) echo 'selected'; ?> >
+                            <?php _e('Gan&oacute; Equipo A (Blanco)', 'fulbito') ?>
+                        </option>
+                        <option value="2" <?php if($game->resultado == 2) echo 'selected'; ?> >
+                            <?php _e('Gan&oacute; Equipo B (Coco)', 'fulbito') ?>
+                        </option>
+                    </select>
+                </fieldset>
                 <h3>
                     <?php _e('Suspendidos', 'fulbito') ?>
                 </h3>
