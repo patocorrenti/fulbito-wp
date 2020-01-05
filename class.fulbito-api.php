@@ -17,18 +17,38 @@ class FulbitoAPI {
         $this->FulbitoDB = $FulbitoDB;
         $this->baseUri = 'fulbito/v1';
 
-        add_action( 'rest_api_init', [$this, 'registerRouteTable']);
+        // Table
+        add_action( 'rest_api_init', [$this, 'registerTable']);
+        // Player profile
+        add_action( 'rest_api_init', [$this, 'registerPlayer']);
     }
 
-    public function registerRouteTable() {
+    public function registerTable() {
       register_rest_route( $this->baseUri, '/table', array(
         'methods' => 'GET',
         'callback' => [$this, 'getTable'],
       ) );
     }
-
     public function getTable() {
-        return $this->FulbitoDB->getTabla();
+        $table = $this->FulbitoDB->getTabla();
+        if ( empty( $table ) ) {
+            return new WP_Error( 'no_table', 'No table', array( 'status' => 404 ) );
+        }
+        return $table;
+    }
+
+    public function registerPlayer() {
+      register_rest_route( $this->baseUri, '/player/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => [$this, 'getPlayerProfile'],
+      ) );
+    }
+    public function getPlayerProfile($data) {
+        $profile = $this->FulbitoDB->getFichaJugador($data['id']);
+        if ( empty( $profile ) ) {
+            return new WP_Error( 'no_player', 'Player dont exists', array( 'status' => 404 ) );
+        }
+        return $profile;
     }
 
 }
