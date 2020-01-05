@@ -10,6 +10,10 @@ Wordpress plugin for organizing and tracking the Futbol 5 you play with your fri
 - Get the position table and the players profiles
 - Have fun!
 
+## Available languages
+- Español
+- English
+
 ## Installation
 ### Clone
 - Clone this repository into your Wordpress install, inside the plugins folder wp-content/plugins/
