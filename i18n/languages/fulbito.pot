@@ -1,0 +1,338 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Fulbito\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-05 17:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.1; wp-5.2.1"
+
+#: class.fulbito-frontend.php:94
+msgid "Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!."
+msgstr ""
+
+#: class.fulbito-admin.php:60
+msgctxt "post type general name"
+msgid "Partidos"
+msgstr ""
+
+#: class.fulbito-admin.php:61
+msgctxt "post type singular name"
+msgid "Partido"
+msgstr ""
+
+#: class.fulbito-admin.php:62
+msgctxt "admin menu"
+msgid "Partidos"
+msgstr ""
+
+#: class.fulbito-admin.php:63
+msgctxt "add new on admin bar"
+msgid "Partidos"
+msgstr ""
+
+#: class.fulbito-admin.php:64
+msgid "A&ntilde;adir partido"
+msgstr ""
+
+#: class.fulbito-admin.php:65
+msgid "A&ntilde;adir nuevo partido"
+msgstr ""
+
+#: class.fulbito-admin.php:66
+msgid "Nueva partido"
+msgstr ""
+
+#: class.fulbito-admin.php:67
+msgid "Editar partido"
+msgstr ""
+
+#: class.fulbito-admin.php:68
+msgid "Ver partido"
+msgstr ""
+
+#: class.fulbito-admin.php:69
+msgid "Buscar partido"
+msgstr ""
+
+#: class.fulbito-admin.php:70
+msgid "No se encontraron partidos."
+msgstr ""
+
+#: class.fulbito-admin.php:104
+msgid "Jugadores | Fulbito"
+msgstr ""
+
+#. Page title
+#: class.fulbito-admin.php:105 templates/admin/games-form.php:21
+#: templates/admin/players.php:8
+msgid "Jugadores"
+msgstr ""
+
+#: class.fulbito-admin.php:130
+msgid "Opciones | Fulbito"
+msgstr ""
+
+#. Page title
+#: class.fulbito-admin.php:131 templates/admin/settings.php:5
+msgid "Opciones"
+msgstr ""
+
+#: templates/admin/settings.php:7
+msgid "Tabla de posiciones"
+msgstr ""
+
+#: templates/admin/settings.php:10
+msgid "Funci&oacute;n beta"
+msgstr ""
+
+#: templates/admin/settings.php:11
+msgid "Utilizar esto cuando se cambia el resultado de un partido viejo"
+msgstr ""
+
+#: templates/admin/settings.php:15
+msgid "Regenerar tabla de posiciones"
+msgstr ""
+
+#: templates/admin/games-form.php:12
+msgid "Fecha"
+msgstr ""
+
+#: templates/admin/games-form.php:25
+msgid "Seleccionar favoritos"
+msgstr ""
+
+#: templates/admin/games-form.php:50
+msgid "Participantes"
+msgstr ""
+
+#: templates/admin/games-form.php:58
+#: templates/frontend/shortcodes/subscription-form.php:55
+msgid "Equipos"
+msgstr ""
+
+#: templates/admin/games-form.php:61
+#: templates/frontend/shortcodes/subscription-form.php:60
+msgid "Equipo A (Blanco)"
+msgstr ""
+
+#: templates/admin/games-form.php:71
+#: templates/frontend/shortcodes/subscription-form.php:63
+msgid "Equipo B (Coco)"
+msgstr ""
+
+#: templates/admin/games-form.php:83
+msgid "Autoarmado"
+msgstr ""
+
+#: templates/admin/games-form.php:86
+msgid "Promediando (RECOMENDADO)"
+msgstr ""
+
+#: templates/admin/games-form.php:89
+msgid "Promediando (algoritmo simple)"
+msgstr ""
+
+#: templates/admin/games-form.php:92
+msgid "Random"
+msgstr ""
+
+#: templates/admin/games-form.php:99
+msgid "Resultado"
+msgstr ""
+
+#: templates/admin/games-form.php:103
+msgid "Sin jugar"
+msgstr ""
+
+#: templates/admin/games-form.php:106 templates/frontend/single-game.php:24
+#: templates/frontend/list-game.php:24
+msgid "Empate"
+msgstr ""
+
+#: templates/admin/games-form.php:109
+msgid "Gan&oacute; Equipo A (Blanco)"
+msgstr ""
+
+#: templates/admin/games-form.php:112
+msgid "Gan&oacute; Equipo B (Coco)"
+msgstr ""
+
+#: templates/admin/games-form.php:117
+msgid "Suspendidos"
+msgstr ""
+
+#: templates/admin/players.php:10
+msgid "A&ntilde;adir nuevo"
+msgstr ""
+
+#: templates/admin/players.php:16
+msgid "Nuevo jugador"
+msgstr ""
+
+#: templates/admin/players.php:21 templates/admin/players.php:45
+msgid "Nombre"
+msgstr ""
+
+#: templates/admin/players.php:32
+msgid "A&ntilde;adir"
+msgstr ""
+
+#: templates/admin/players.php:42
+msgid "ID"
+msgstr ""
+
+#: templates/admin/players.php:48
+msgid "Email"
+msgstr ""
+
+#: templates/admin/players.php:51
+msgid "Nacimiento"
+msgstr ""
+
+#: templates/admin/players.php:54
+msgid "Favorito"
+msgstr ""
+
+#: templates/admin/players.php:57
+msgid "Lesi&oacute;n"
+msgstr ""
+
+#: templates/admin/players.php:60
+msgid "Activo"
+msgstr ""
+
+#: templates/admin/players.php:97 templates/admin/players.php:107
+#: templates/admin/players.php:117
+msgid "Si"
+msgstr ""
+
+#: templates/admin/players.php:100 templates/admin/players.php:110
+#: templates/admin/players.php:120
+msgid "No"
+msgstr ""
+
+#: templates/admin/players.php:130
+msgid "Guardar cambios"
+msgstr ""
+
+#: templates/frontend/single-game.php:18 templates/frontend/single-game.php:22
+#: templates/frontend/list-game.php:18 templates/frontend/list-game.php:22
+msgid "Ganador"
+msgstr ""
+
+#: templates/frontend/single-game.php:65 templates/frontend/list-game.php:65
+msgid "Este partido a&uacute;n no se jug&oacute;"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:18
+#, php-format
+msgid "Esta lesionado, si eres %s por favor visita a tu veterinario."
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:24
+msgid "Participante destacado."
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:29
+#, php-format
+msgid "%d de %d partidos jugados"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:35
+#, php-format
+msgid "%d suspensiones"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:42
+#, php-format
+msgid "%d en Equipo A (Blanco) y %d en Equipo B (Coco)"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:50
+msgid "Jugaste con"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:58
+#, php-format
+msgid "%d veces"
+msgstr ""
+
+#: templates/frontend/shortcodes/player-profile.php:63
+msgid "No conozco ese jugador."
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:12
+msgctxt "Position Table header for name"
+msgid "Nombre"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:15
+msgctxt "Position Table header for Played games"
+msgid "J"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:18
+msgctxt "Position Table header for Wined games"
+msgid "G"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:21
+msgctxt "Position Table header for Tied games"
+msgid "E"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:24
+msgctxt "Position Table header for Lost games"
+msgid "P"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:27
+msgctxt "Position Table header for Points"
+msgid "Pts"
+msgstr ""
+
+#: templates/frontend/shortcodes/positions-table.php:30
+msgctxt "Position Table header for Average"
+msgid "Prom."
+msgstr ""
+
+#: templates/frontend/shortcodes/subscription-form.php:44
+msgid "Inscribir"
+msgstr ""
+
+#: templates/frontend/shortcodes/subscription-form.php:48
+msgid "La inscripci&oacute;n cerr&oacute;, te quedaste afuera."
+msgstr ""
+
+#: templates/frontend/shortcodes/subscription-form.php:121
+msgid "No hay equipos todav&iacute;a."
+msgstr ""
+
+#: templates/frontend/shortcodes/subscription-form.php:144
+msgid "No hay inscriptos todav&iacute;a"
+msgstr ""
+
+#. Name of the plugin
+msgid "Fulbito"
+msgstr ""
+
+#. Description of the plugin
+msgid "Herramientas para tu Fulbito 5"
+msgstr ""
+
+#. Author of the plugin
+msgid "Pato Correnti"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://patocorrenti.com"
+msgstr ""

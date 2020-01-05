@@ -21,7 +21,7 @@
         <?php elseif($jugador_ficha['datos']->favorito): ?>
             <li class="favorite">
                 <i class="fas fa-star"></i>
-                <?php _e('Todos los lunes ah&iacute; en hora y vestido como corresponde.', 'fulbito') ?>
+                <?php _e('Participante destacado.', 'fulbito') ?>
             </li>
         <?php endif; ?>
         <li class="games">
