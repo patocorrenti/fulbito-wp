@@ -24,6 +24,9 @@ class FulbitoAdmin extends FulbitoCommons {
         // Register query vars
         add_filter( 'query_vars', [$this, 'registerQueryVars']);
 
+        // Register settings
+        add_action( 'admin_init', [$this, 'registerSettings']);
+
         // Create post type partidos
         add_action( 'init', [$this, 'registerPostTypePartidos']);
         // Disable Gutenberg Editor for partidos
@@ -53,6 +56,10 @@ class FulbitoAdmin extends FulbitoCommons {
     public function registerQueryVars($vars) {
         $vars[] = 'ft_show_profile';
         return $vars;
+    }
+
+    public function registerSettings() {
+       register_setting( 'fulbito_settings', 'enable_api');
     }
 
     public function registerPostTypePartidos() {
@@ -127,8 +134,8 @@ class FulbitoAdmin extends FulbitoCommons {
     public function addSettingsPage() {
         add_submenu_page(
             'edit.php?post_type=ft_partidos',
-            __('Opciones | Fulbito', 'fulbito'), // Page title
-            __('Opciones', 'fulbito'), // Menu title
+            __('Ajustes | Fulbito', 'fulbito'), // Page title
+            __('Ajustes', 'fulbito'), // Menu title
             'edit_posts', // Capability
             'options', // Page slug
             array($this, 'settingsPage'), //function

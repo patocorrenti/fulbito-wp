@@ -39,6 +39,9 @@ include_once( 'class.fulbito-api.php' );
 $FulbitoDB = new FulbitoDB();
 new FulbitoAdmin($FulbitoDB);
 new FulbitoFrontend($FulbitoDB);
-new FulbitoAPI($FulbitoDB);
+
+if (get_option('enable_api') === 'on') {
+    new FulbitoAPI($FulbitoDB);
+}
 
 ?>

@@ -17,18 +17,28 @@ class FulbitoAPI {
         $this->FulbitoDB = $FulbitoDB;
         $this->baseUri = 'fulbito/v1';
 
-        // Table
-        add_action( 'rest_api_init', [$this, 'registerTable']);
-        // Player profile
-        add_action( 'rest_api_init', [$this, 'registerPlayer']);
+        // Register routes
+        add_action( 'rest_api_init', [$this, 'registerRoutes']);
     }
 
-    public function registerTable() {
-      register_rest_route( $this->baseUri, '/table', array(
-        'methods' => 'GET',
-        'callback' => [$this, 'getTable'],
-      ) );
+    public function registerSettings() {
+       register_setting( 'fulbito_settings_api', 'enable_api');
     }
+
+    public function registerRoutes() {
+        // Table
+        register_rest_route( $this->baseUri, '/table', array(
+            'methods' => 'GET',
+            'callback' => [$this, 'getTable'],
+        ) );
+        // Players
+        register_rest_route( $this->baseUri, '/player/(?P<id>\d+)', array(
+            'methods' => 'GET',
+            'callback' => [$this, 'getPlayerProfile'],
+        ) );
+
+    }
+
     public function getTable() {
         $table = $this->FulbitoDB->getTabla();
         if ( empty( $table ) ) {
@@ -37,12 +47,6 @@ class FulbitoAPI {
         return $table;
     }
 
-    public function registerPlayer() {
-      register_rest_route( $this->baseUri, '/player/(?P<id>\d+)', array(
-        'methods' => 'GET',
-        'callback' => [$this, 'getPlayerProfile'],
-      ) );
-    }
     public function getPlayerProfile($data) {
         $profile = $this->FulbitoDB->getFichaJugador($data['id']);
         if ( empty( $profile ) ) {
