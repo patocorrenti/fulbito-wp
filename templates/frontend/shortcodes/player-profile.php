@@ -10,6 +10,14 @@
         <?php echo $jugador_ficha['datos']->nombre;?>
     </h2>
     <ul class="data">
+        <li>
+            <span class="average">
+                <?php echo $jugador_ficha['partidos']->stats->promedio ?>%
+            </span>
+            <span class="points">
+                (<?php echo sprintf(__('%d puntos', 'fulbito'), $jugador_ficha['partidos']->stats->puntos) ?>)
+            </span>
+        </li>
         <?php if($jugador_ficha['datos']->lesion): ?>
             <li class="injured">
                 <i class="fas fa-wheelchair"></i>
@@ -28,6 +36,23 @@
                 echo sprintf(__('%d de %d partidos jugados', 'fulbito'), $jugador_ficha['partidos']->jugados, $total_partidos)
             ?>
             (<?php echo round( (int)$jugador_ficha['partidos']->jugados * 100 / (int)$total_partidos);?>%)
+            <ul class="stats">
+                <li>
+                    <?php
+                        echo sprintf(__('%d ganados', 'fulbito'), $jugador_ficha['partidos']->stats->ganados)
+                    ?>
+                </li>
+                <li>
+                    <?php
+                        echo sprintf(__('%d perdidos', 'fulbito'), $jugador_ficha['partidos']->stats->perdidos)
+                    ?>
+                </li>
+                <li>
+                    <?php
+                        echo sprintf(__('%d empatados', 'fulbito'), $jugador_ficha['partidos']->stats->empatados)
+                    ?>
+                </li>
+            </ul>
         </li>
         <li class="suspensions">
             <?php

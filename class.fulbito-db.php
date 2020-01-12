@@ -183,7 +183,9 @@ class FulbitoDB {
 
     // GETTERS ---------------------------------------------------------
 
-    // trae todos los jugadores (para admin) o si se le pasa un ID lo hace en relacion a un partido, se le puede pedir que ordene por promedio
+    // trae todos los jugadores (para admin)
+    // si se le pasa un ID lo hace en relacion a un partido
+    // se le puede pedir que ordene por promedio
     function getJugadores($partidoID=false, $order_promedio=false){
 
         $order_promedio = ( $order_promedio ) ? 'tabla.promedio DESC,' : '';
@@ -226,9 +228,10 @@ class FulbitoDB {
                         );
         $result = $this->wpdb->get_results($sql);
         $profile['partidos'] = $result[0];
-
-        /* total played games */
+        // Total games
         $profile['partidos']->total = $this->getTotalPartidos();
+        // Current stats
+        $profile['partidos']->stats = $this->getPlayerCurrentStats($jugadorID);
 
         /* player streaks */
         $profile['streak'] = [];
@@ -287,6 +290,16 @@ class FulbitoDB {
             return $this->wpdb->get_results($sql)[0]->streak;
 
         endif;
+    }
+
+    // Gets current stats from the player on the position table
+    function getPlayerCurrentStats($playerId) {
+        $sql = sprintf('
+            SELECT jugados, ganados, empatados, perdidos, puntos, promedio
+            FROM %s WHERE jugadorID = %d ORDER BY partidoID DESC LIMIT 1'
+            , $this->tables['tabla'], (int)$playerId);
+        $results = $this->wpdb->get_results($sql)[0];
+        return $results;
     }
 
     function getTotalPartidos() {
@@ -350,7 +363,8 @@ class FulbitoDB {
 
     }
 
-    //obtiene la tabla de la temporada (ultima fecha), se le puede pedir que la calcule en caliente o que la obtenga de la tabla donde se cachea
+    // obtiene la tabla de la temporada (ultima fecha)
+    // se le puede pedir que la calcule en caliente o que la obtenga de la tabla donde se cachea
     function getTabla($calcular=false){
 
         if( !$calcular ):
