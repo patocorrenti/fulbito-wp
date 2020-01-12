@@ -208,28 +208,32 @@ class FulbitoDB {
 
     function getFichaJugador($jugadorID){
 
+        $profile = [];
+
         /* data basica */
         $sql = sprintf('SELECT nombre, favorito, lesion FROM %s WHERE id = %d;', $this->tables['jugadores'], $jugadorID);
         $result = $this->wpdb->get_results($sql);
-        $return['datos'] = $result[0];
+        $profile['datos'] = $result[0];
 
         /* data de partidos */
         $sql = sprintf('SELECT
                                 COUNT(partidoID) jugados,
                                 COUNT(NULLIF(suspendido!=1,1)) suspensiones,
-                                COUNT(NULLIF(equipo!=1,1)) blanco,
-                                COUNT(NULLIF(equipo!=2,1)) coco
+                                COUNT(NULLIF(equipo!=1,1)) teamA,
+                                COUNT(NULLIF(equipo!=2,1)) teamB
                                 FROM %s WHERE jugadorID = %d;'
                                 ,$this->tables['equipos'], $jugadorID
                         );
         $result = $this->wpdb->get_results($sql);
-        $return['partidos'] = $result[0];
+        $profile['partidos'] = $result[0];
 
         /* total played games */
-        $return['partidos']->total = $this->getTotalPartidos();
+        $profile['partidos']->total = $this->getTotalPartidos();
 
-        /* max winning streak */
-        $return['partidos']->winningStreak = (int)$this->getPlayerWinningStreak($jugadorID);
+        /* player streaks */
+        $profile['streak'] = [];
+        $profile['streak']['winning']= (int)$this->getPlayerStreak($jugadorID, 'winning');
+        $profile['streak']['losing'] = (int)$this->getPlayerStreak($jugadorID, 'losing');
 
         /* data de jugadores relacionados */
         $sql = sprintf('SELECT
@@ -245,14 +249,15 @@ class FulbitoDB {
                                 ,$this->tables['equipos'], $this->tables['equipos'], $this->tables['jugadores'], $jugadorID
                         );
         $result = $this->wpdb->get_results($sql);
-        $return['relacionados'] = $result;
+        $profile['relacionados'] = $result;
 
-        return $return;
+        return $profile;
 
     }
 
-    function getPlayerWinningStreak($playerId) {
-        // Gets winning streak for a given player
+    function getPlayerStreak($playerId, $streakType) {
+        if ($streakType === 'winning') :
+        // Gets winning streak
         $sql = sprintf('
             SELECT MAX(streak) AS streak
             FROM (
@@ -264,8 +269,24 @@ class FulbitoDB {
                 ORDER BY e.partidoID
             ) AS streak;'
             ,$this->tables['equipos'], $this->tables['partidos'], (int)$playerId);
+            return $this->wpdb->get_results($sql)[0]->streak;
 
-        return $this->wpdb->get_results($sql)[0]->streak;
+        elseif ($streakType === 'losing'):
+        // Gets losing streak
+        $sql = sprintf('
+            SELECT MAX(streak) AS streak
+            FROM (
+                SELECT IF(equipo!=resultado AND resultado!=3, @streak:=@streak+1, @streak:=0) AS streak
+                FROM %1$s AS e
+                JOIN %2$s AS p ON e.partidoID=p.partidoID
+                ,(SELECT @streak:=0) t
+                WHERE jugadorID = %3$d
+                ORDER BY e.partidoID
+            ) AS streak;'
+            ,$this->tables['equipos'], $this->tables['partidos'], (int)$playerId);
+            return $this->wpdb->get_results($sql)[0]->streak;
+
+        endif;
     }
 
     function getTotalPartidos() {

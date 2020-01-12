@@ -35,22 +35,47 @@
             ?>
             (<?php echo round( (int)$jugador_ficha['partidos']->suspensiones * 100 / (int)$jugador_ficha['partidos']->jugados, 2 ) ?>%)
         </li>
-        <li class="winningStreak">
-            <?php
-                echo sprintf(
-                    __('%d m&aacute;xima racha de partidos ganados')
-                    , $jugador_ficha['partidos']->winningStreak
-                )
-            ?>
+        <li class="streak">
+            <?php _e('Rachas m&aacute;ximas', 'fulbito') ?>
+            <ul class="streaks">
+                <li class="winning">
+                    <?php
+                        echo sprintf(
+                            __('%d ganados', 'fulbito')
+                            , $jugador_ficha['streak']['winning']
+                        )
+                    ?>
+                </li>
+                <li class="losing">
+                    <?php
+                        echo sprintf(
+                            __('%d perdidos', 'fulbito')
+                            , $jugador_ficha['streak']['losing']
+                        )
+                    ?>
+                </li>
+            </ul>
         </li>
-        <li class="teams">
-            <?php
-                echo sprintf(
-                    __('%d en Equipo A (Blanco) y %d en Equipo B (Coco)', 'fulbito')
-                    , $jugador_ficha['partidos']->blanco
-                    , $jugador_ficha['partidos']->coco
-                )
-            ?>
+        <li class="team">
+            <?php _e('Equipos', 'fulbito') ?>
+            <ul class="teams">
+                <li>
+                    <?php
+                        echo sprintf(
+                            __('%d veces en Equipo A (Blanco)', 'fulbito')
+                            , $jugador_ficha['partidos']->teamA
+                        )
+                    ?>
+                </li>
+                <li>
+                    <?php
+                        echo sprintf(
+                            __('%d veces en Equipo B (Coco)', 'fulbito')
+                            , $jugador_ficha['partidos']->teamB
+                        )
+                    ?>
+                </li>
+            </ul>
         </li>
     </ul>
     <h4 class="played-with">
