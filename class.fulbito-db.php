@@ -228,6 +228,9 @@ class FulbitoDB {
         /* total played games */
         $return['partidos']->total = $this->getTotalPartidos();
 
+        /* max winning streak */
+        $return['partidos']->winningStreak = (int)$this->getPlayerWinningStreak($jugadorID);
+
         /* data de jugadores relacionados */
         $sql = sprintf('SELECT
                                 eq2.jugadorID id, jug.nombre nombre, COUNT(*) AS cantidad
@@ -246,6 +249,23 @@ class FulbitoDB {
 
         return $return;
 
+    }
+
+    function getPlayerWinningStreak($playerId) {
+        // Gets winning streak for a given player
+        $sql = sprintf('
+            SELECT MAX(streak) AS streak
+            FROM (
+                SELECT IF(equipo=resultado, @streak:=@streak+1, @streak:=0) AS streak
+                FROM %1$s AS e
+                JOIN %2$s AS p ON e.partidoID=p.partidoID
+                ,(SELECT @streak:=0) t
+                WHERE jugadorID = %3$d
+                ORDER BY e.partidoID
+            ) AS streak;'
+            ,$this->tables['equipos'], $this->tables['partidos'], (int)$playerId);
+
+        return $this->wpdb->get_results($sql)[0]->streak;
     }
 
     function getTotalPartidos() {

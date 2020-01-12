@@ -35,6 +35,14 @@
             ?>
             (<?php echo round( (int)$jugador_ficha['partidos']->suspensiones * 100 / (int)$jugador_ficha['partidos']->jugados, 2 ) ?>%)
         </li>
+        <li class="winningStreak">
+            <?php
+                echo sprintf(
+                    __('%d m&aacute;xima racha de partidos ganados')
+                    , $jugador_ficha['partidos']->winningStreak
+                )
+            ?>
+        </li>
         <li class="teams">
             <?php
                 echo sprintf(
