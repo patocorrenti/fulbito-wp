@@ -65,11 +65,10 @@ class FulbitoFrontend extends FulbitoCommons {
         else :
             $playerID = get_query_var('ft_show_profile');
             $jugador_ficha = $this->FulbitoDB->getFichaJugador($playerID);
-            $total_partidos = $this->FulbitoDB->getTotalPartidos();
             ob_start();
             $this->ft_get_template(
                 'frontend/shortcodes/player-profile',
-                ['playerID' => $playerID, 'jugador_ficha' => $jugador_ficha, 'total_partidos' => $total_partidos]
+                ['jugador_ficha' => $jugador_ficha]
             );
             return ob_get_clean();
         endif;

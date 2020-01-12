@@ -225,6 +225,9 @@ class FulbitoDB {
         $result = $this->wpdb->get_results($sql);
         $return['partidos'] = $result[0];
 
+        /* total played games */
+        $return['partidos']->total = $this->getTotalPartidos();
+
         /* data de jugadores relacionados */
         $sql = sprintf('SELECT
                                 eq2.jugadorID id, jug.nombre nombre, COUNT(*) AS cantidad
@@ -245,7 +248,7 @@ class FulbitoDB {
 
     }
 
-    function getTotalPartidos(){
+    function getTotalPartidos() {
         $sql = sprintf('SELECT COUNT(partidoID) as total FROM %s', $this->tables['partidos']);
         $results = $this->wpdb->get_results($sql);
         return $results[0]->total;

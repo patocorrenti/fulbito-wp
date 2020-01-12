@@ -1,9 +1,8 @@
 <?php
     defined( 'ABSPATH' ) or exit();
 
-    $playerID = $templateArgs['playerID'];
     $jugador_ficha = $templateArgs['jugador_ficha'];
-    $total_partidos = $templateArgs['total_partidos'];
+    $total_partidos = $templateArgs['jugador_ficha']['partidos']->total;
 ?>
 <div class="fulbito player-profile">
 <?php if( $jugador_ficha && is_array($jugador_ficha) ): ?>
