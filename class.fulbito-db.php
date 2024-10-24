@@ -125,30 +125,30 @@ class FulbitoDB {
     // salva un partido (disparado por un save de post type partido)
     function salvarPartido( $postID, $post ){
 
+        if( empty($post['participantes']) || !count($post['participantes']) ) return;
+
         //Guardo los jugadores en cada equipo o como participantes
-        if( count($post['participantes']) ):
+        $idRegistrado = array();
 
-            $idRegistrado = array();
-
-            $jugadoresEquipoA = ( $post['jugadoresEquipoA'] ) ? $post['jugadoresEquipoA'] : array();
-            $jugadoresEquipoB = ( $post['jugadoresEquipoB'] ) ? $post['jugadoresEquipoB'] : array();
+        $jugadoresEquipoA = ( $post['jugadoresEquipoA'] ) ? $post['jugadoresEquipoA'] : array();
+        $jugadoresEquipoB = ( $post['jugadoresEquipoB'] ) ? $post['jugadoresEquipoB'] : array();
 
 
-            foreach( $post['participantes'] as $jugador ):
+        foreach( $post['participantes'] as $jugador ):
 
-                $suspendido = ( $post['suspendido'][$jugador] ) ? 1 : 0;
+            $suspendido = ( $post['suspendido'][$jugador] ) ? 1 : 0;
 
-                $equipo = 0;
-                if( in_array( $jugador, $jugadoresEquipoA ) ) $equipo = 1;
-                if( in_array( $jugador, $jugadoresEquipoB ) ) $equipo = 2;
+            $equipo = 0;
+            if( in_array( $jugador, $jugadoresEquipoA ) ) $equipo = 1;
+            if( in_array( $jugador, $jugadoresEquipoB ) ) $equipo = 2;
 
-                $this->wpdb->replace( $this->tables['equipos'], array( 'partidoID' => $postID, 'jugadorID' => (int)$jugador, 'equipo' => (int)$equipo, 'suspendido' => $suspendido  ) );
+            $this->wpdb->replace( $this->tables['equipos'], array( 'partidoID' => $postID, 'jugadorID' => (int)$jugador, 'equipo' => (int)$equipo, 'suspendido' => $suspendido  ) );
 
-                $idRegistrados[] = (int)$jugador;
+            $idRegistrados[] = (int)$jugador;
 
-            endforeach;
+        endforeach;
 
-        endif;
+
 
         //Borro cualquier jugador que no me hayan enviado
         $participantesStr = (is_array($post['participantes'])) ? implode( ',', $post['participantes'] ) : '0';
