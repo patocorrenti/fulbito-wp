@@ -187,7 +187,7 @@ class FulbitoAdmin extends FulbitoCommons {
             return;
 
         // FIXME ADD NONCE
-        // if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
+        if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
             $this->FulbitoDB->salvarPartido( $postId, $_POST );
     }
 
