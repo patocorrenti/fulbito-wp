@@ -178,7 +178,7 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function saveGameMetadata($postId) {
         global $post;
-        
+
         if (
             empty($post)
             || $post->post_type != 'ft_partidos'
@@ -186,8 +186,8 @@ class FulbitoAdmin extends FulbitoCommons {
         )
             return;
 
-        // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
-        if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
+        // FIXME ADD NONCE
+        // if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
             $this->FulbitoDB->salvarPartido( $postId, $_POST );
     }
 

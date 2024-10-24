@@ -125,33 +125,32 @@ class FulbitoDB {
     // salva un partido (disparado por un save de post type partido)
     function salvarPartido( $postID, $post ){
 
-        if( empty($post['participantes']) || !count($post['participantes']) ) return;
-
         //Guardo los jugadores en cada equipo o como participantes
-        $idRegistrado = array();
+        $idRegistrado = [];
 
-        $jugadoresEquipoA = ( $post['jugadoresEquipoA'] ) ? $post['jugadoresEquipoA'] : array();
-        $jugadoresEquipoB = ( $post['jugadoresEquipoB'] ) ? $post['jugadoresEquipoB'] : array();
+        $jugadoresEquipoA = ( !empty($post['jugadoresEquipoA']) ) ? $post['jugadoresEquipoA'] : [];
+        $jugadoresEquipoB = ( !empty($post['jugadoresEquipoB']) ) ? $post['jugadoresEquipoB'] : [];
 
+        if( !empty($post['participantes']) && count($post['participantes']) ):
+            foreach( $post['participantes'] as $jugador ):
 
-        foreach( $post['participantes'] as $jugador ):
+                $suspendido = ( !empty($post['suspendido']) && $post['suspendido'][$jugador] ) ? 1 : 0;
 
-            $suspendido = ( !empty($post['suspendido']) && $post['suspendido'][$jugador] ) ? 1 : 0;
+                $equipo = 0;
+                if( in_array( $jugador, $jugadoresEquipoA ) ) $equipo = 1;
+                if( in_array( $jugador, $jugadoresEquipoB ) ) $equipo = 2;
 
-            $equipo = 0;
-            if( in_array( $jugador, $jugadoresEquipoA ) ) $equipo = 1;
-            if( in_array( $jugador, $jugadoresEquipoB ) ) $equipo = 2;
+                $this->wpdb->replace( $this->tables['equipos'], array( 'partidoID' => $postID, 'jugadorID' => (int)$jugador, 'equipo' => (int)$equipo, 'suspendido' => $suspendido  ) );
 
-            $this->wpdb->replace( $this->tables['equipos'], array( 'partidoID' => $postID, 'jugadorID' => (int)$jugador, 'equipo' => (int)$equipo, 'suspendido' => $suspendido  ) );
+                $idRegistrados[] = (int)$jugador;
 
-            $idRegistrados[] = (int)$jugador;
-
-        endforeach;
-
-
+            endforeach;
+        endif;
 
         //Borro cualquier jugador que no me hayan enviado
-        $participantesStr = (is_array($post['participantes'])) ? implode( ',', $post['participantes'] ) : '0';
+        $participantesStr = ( !empty($post['participantes']) && is_array($post['participantes']))
+            ? implode( ',', $post['participantes'] )
+            : '0';
         $sql = sprintf( 'DELETE FROM %s WHERE jugadorID NOT IN (%s) AND partidoID = %d', $this->tables['equipos'],  $participantesStr, $postID );
         $this->wpdb->query($sql);
 
