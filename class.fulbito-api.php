@@ -13,7 +13,7 @@ class FulbitoAPI {
     var $baseUri;
 
     // Fulbito DB class instance needs to be inyected
-    function FulbitoAPI($FulbitoDB) {
+    function __construct($FulbitoDB) {
         $this->FulbitoDB = $FulbitoDB;
         $this->baseUri = 'fulbito/v1';
 

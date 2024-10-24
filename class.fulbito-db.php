@@ -12,7 +12,7 @@ class FulbitoDB {
     var $wpdb;
     var $tables = array();
 
-    function FulbitoDB() {
+    function __construct() {
         // Get global object to work with DB
         $this->wpdb = $GLOBALS['wpdb'];
         // Table names

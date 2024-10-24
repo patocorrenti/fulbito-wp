@@ -12,7 +12,7 @@ class FulbitoAdmin extends FulbitoCommons {
     var $FulbitoDB;
 
     // Fulbito DB class instance needs to be inyected
-    function FulbitoAdmin($FulbitoDB) {
+    function __construct($FulbitoDB) {
 
         $this->FulbitoDB = $FulbitoDB;
 
@@ -119,11 +119,20 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function playersPage() {
         // Add new player
-        if( $_POST['ft_action'] === 'ft_add_player' && strlen($_POST['nombre']) > 2 && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_add_player'))
+        if(
+            !empty($_POST['ft_action'])
+            && $_POST['ft_action'] === 'ft_add_player'
+            && strlen($_POST['nombre']) > 2
+            && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_add_player')
+        )
             $this->FulbitoDB->addJugador(esc_sql($_POST['nombre']));
 
         // Players edition
-        if( $_POST['ft_action'] === 'ft_edit_players' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_edit_players'))
+        if(
+            !empty($_POST['ft_action'])
+            && $_POST['ft_action'] === 'ft_edit_players'
+            && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_edit_players')
+        )
             $this->FulbitoDB->editJugadores($_POST);
 
         // Show players list
@@ -145,7 +154,11 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function settingsPage() {
         // Table regeneration
-        if( $_POST['ft_action'] === 'ft_regenerar_tabla' && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_regenerar_tabla') )
+        if(
+            !empty($_POST['ft_action'])
+            && $_POST['ft_action'] === 'ft_regenerar_tabla'
+            && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_regenerar_tabla')
+        )
             $this->FulbitoDB->regenerarTablas();
 
         // Show players list
@@ -165,7 +178,7 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function saveGameMetadata($postId) {
         global $post;
-        if ($post->post_type != 'ft_partidos') return;
+        if (empty($post) || $post->post_type != 'ft_partidos') return;
 
         // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
         if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )

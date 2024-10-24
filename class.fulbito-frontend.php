@@ -12,7 +12,7 @@ class FulbitoFrontend extends FulbitoCommons {
     var $FulbitoDB;
 
     // Fulbito DB class instance needs to be inyected
-    function FulbitoFrontend($FulbitoDB) {
+    function __construct($FulbitoDB) {
 
         $this->FulbitoDB = $FulbitoDB;
 
@@ -98,12 +98,12 @@ class FulbitoFrontend extends FulbitoCommons {
     public function subscribePlayer() {
         // FIXME fix use of $_POST!!! <- use wp query vars instead
         if(
-            wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_subscribe_player')
-            && isset($_POST['jugador'])
+            isset($_POST['jugador'])
             && isset($_POST['partido'])
             && isset($_POST['inscribir'])
             && isset($_POST['validancia'])
             && !$_POST['validancia']
+            && wp_verify_nonce( wp_unslash($_POST['_wpnonce']), 'ft_subscribe_player')
         ):
             $this->FulbitoDB->inscribirJugador( (int)$_POST['jugador'], (int)$_POST['partido'] );
         endif;
