@@ -77,7 +77,8 @@ class FulbitoFrontend extends FulbitoCommons {
     public function shortcode_subscriptionForm() {
         // There must be a not-played game
         $prox_partido = $this->FulbitoDB->getPartidoSinJugar();
-        if( $prox_partido ):
+
+        if( !empty($prox_partido) ):
             $args = array( 'post_type'=>'ft_partidos', 'p'=>$prox_partido->partidoID );
             $game_query = new WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );

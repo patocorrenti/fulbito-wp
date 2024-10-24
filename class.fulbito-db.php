@@ -136,7 +136,7 @@ class FulbitoDB {
 
         foreach( $post['participantes'] as $jugador ):
 
-            $suspendido = ( $post['suspendido'][$jugador] ) ? 1 : 0;
+            $suspendido = ( !empty($post['suspendido']) && $post['suspendido'][$jugador] ) ? 1 : 0;
 
             $equipo = 0;
             if( in_array( $jugador, $jugadoresEquipoA ) ) $equipo = 1;
@@ -316,10 +316,9 @@ class FulbitoDB {
     }
 
     function getPartidoSinJugar(){
-
         $sql = sprintf( 'SELECT partidoID FROM %s WHERE resultado = 0 LIMIT 1', $this->tables['partidos'] );
         $results = $this->wpdb->get_results($sql);
-        return $results[0];
+        return count($results) ? $results[0] : false;
     }
 
     //calcula la tabla de posiciones hasta el partido que le paso y la guarda en la tabla cache

@@ -178,7 +178,13 @@ class FulbitoAdmin extends FulbitoCommons {
 
     public function saveGameMetadata($postId) {
         global $post;
-        if (empty($post) || $post->post_type != 'ft_partidos') return;
+        
+        if (
+            empty($post)
+            || $post->post_type != 'ft_partidos'
+            || empty($_POST['ftnonce'])
+        )
+            return;
 
         // FIXME reading the $_POST data is not OK!!! -> use wp query vars instead
         if( wp_verify_nonce( wp_unslash($_POST['ftnonce']), 'ft_game_metadata') )
