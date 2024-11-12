@@ -1,13 +1,11 @@
 <?php
+namespace PCorrenti\Fulbito;
+
+use PCorrenti\Fulbito\Commons;
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/**
- * FulbitoAdmin Class
- *
- *
- */
-
-class FulbitoAdmin extends FulbitoCommons {
+class Admin extends Commons {
 
     var $FulbitoDB;
 

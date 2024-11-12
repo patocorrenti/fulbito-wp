@@ -1,13 +1,11 @@
 <?php
+namespace PCorrenti\Fulbito;
+
+use PCorrenti\Fulbito\Commons;
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/**
- * FulbitoFrontend Class
- *
- *
- */
-
-class FulbitoFrontend extends FulbitoCommons {
+class Frontend extends Commons {
 
     var $FulbitoDB;
 
@@ -80,7 +78,7 @@ class FulbitoFrontend extends FulbitoCommons {
 
         if( !empty($prox_partido) ):
             $args = array( 'post_type'=>'ft_partidos', 'p'=>$prox_partido->partidoID );
-            $game_query = new WP_Query( $args );
+            $game_query = new \WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
             $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
             ob_start();
