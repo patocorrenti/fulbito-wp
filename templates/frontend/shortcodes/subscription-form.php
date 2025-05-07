@@ -7,11 +7,11 @@
 ?>
 <?php
 // Totals
-$inscriptos = 0;
+$registered = 0;
 $equipados  = 0;
 if( is_array( $players ) ){
     foreach($players as $player){
-        if( $player->participa) $inscriptos++;
+        if( $player->participa) $registered++;
         if( $player->equipo ) $equipados++;
     }
 }
@@ -27,7 +27,7 @@ if( is_array( $players ) ){
     <?php endif ?>
 
     <!-- FORM -->
-    <?php if( $inscriptos < 10 ): ?>
+    <?php if( $registered < 10 ): ?>
         <form action="" method="post" class="subscription-form">
             <input type="hidden" name="validancia" value="">
             <input type="hidden" name="partido" value="<?php echo get_the_ID(); ?>" >
@@ -50,7 +50,7 @@ if( is_array( $players ) ){
     <?php endif;?>
 
     <!-- COMPLETED -->
-    <?php if( $inscriptos === 10 ):?>
+    <?php if( $registered === 10 ):?>
         <?php if( $equipados === 10 ): ?>
             <h4 class="teams-title"><?php _e('Equipos', 'fulbito') ?></h4>
             <table class="team_table">
@@ -124,8 +124,8 @@ if( is_array( $players ) ){
     <?php endif;?>
 
     <!-- SUBSCRIPTORS LIST -->
-    <?php if( $inscriptos && $equipados !== 10 ) : ?>
-        <h4 class="subscriptors-title">Inscriptos (<?php echo $inscriptos;?>)</h4>
+    <?php if( $registered && $equipados !== 10 ) : ?>
+        <h4 class="subscriptors-title">Inscriptos (<?php echo $registered;?>)</h4>
         <ul class="subscriptors-list">
             <?php foreach($players as $player): if( $player->participa ):  ?>
                 <li>
@@ -135,11 +135,11 @@ if( is_array( $players ) ){
                     <?php elseif($player->favorito): ?>
                         <i class="fa fa-star" aria-hidden="true"></i>
                     <?php endif; ?>
-                    (<?php print_r($player->promedio); ?>)
+                    (<?php print_r($player->promedio) ?>)
                 </li>
-            <?php $total ++; endif; endforeach;?>
+            <?php endif; endforeach;?>
         </ul>
-    <?php elseif( !$inscriptos ) : ?>
+    <?php elseif( !$registered ) : ?>
         <p class="no_subscriptors">
             <?php _e('No hay inscriptos todav&iacute;a', 'fulbito') ?>
         </p>
