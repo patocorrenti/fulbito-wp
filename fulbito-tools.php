@@ -16,7 +16,7 @@ This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
-This program is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
@@ -26,22 +26,25 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+namespace PCorrenti\Fulbito;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-include_once( 'class.fulbito-db.php' );
-include_once( 'class.fulbito-commons.php' );
-include_once( 'class.fulbito-admin.php' );
-include_once( 'class.fulbito-frontend.php' );
-include_once( 'class.fulbito-api.php' );
+require_once( __DIR__ . '/vendor/autoload.php');
 
-$FulbitoDB = new FulbitoDB();
-new FulbitoAdmin($FulbitoDB);
-new FulbitoFrontend($FulbitoDB);
+use PCorrenti\Fulbito\DB;
+use PCorrenti\Fulbito\Admin;
+use PCorrenti\Fulbito\Frontend;
+use PCorrenti\Fulbito\APIExtend;
+
+$FulbitoDB = new DB();
+new Admin($FulbitoDB);
+new Frontend($FulbitoDB);
 
 if (get_option('enable_api') === 'on') {
-    new FulbitoAPI($FulbitoDB);
+    new APIExtend($FulbitoDB);
 }
 
 ?>

@@ -1,13 +1,15 @@
 <?php
+namespace PCorrenti\Fulbito;
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * FulbitoDB Class
+ * DB Class
  *
  * Handles the plugin tables and SQL queries
  */
 
-class FulbitoDB {
+class DB {
 
     var $wpdb;
     var $tables = array();

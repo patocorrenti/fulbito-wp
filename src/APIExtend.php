@@ -1,13 +1,9 @@
 <?php
+namespace PCorrenti\Fulbito;
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/**
- * FulbitoAPI Class
- *
- *
- */
-
-class FulbitoAPI {
+class APIExtend {
 
     var $FulbitoDB;
     var $baseUri;

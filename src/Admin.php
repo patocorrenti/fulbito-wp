@@ -1,13 +1,11 @@
 <?php
+namespace PCorrenti\Fulbito;
+
+use PCorrenti\Fulbito\Commons;
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/**
- * FulbitoAdmin Class
- *
- *
- */
-
-class FulbitoAdmin extends FulbitoCommons {
+class Admin extends Commons {
 
     var $FulbitoDB;
 
@@ -192,7 +190,7 @@ class FulbitoAdmin extends FulbitoCommons {
     }
 
     function enqueueAdminScripts() {
-        wp_enqueue_script( 'fulbitojs', plugins_url('assets/js/fulbito-tools.js', __FILE__) , array( 'jquery' ) );
+        wp_enqueue_script( 'fulbitojs', plugins_url('../assets/js/fulbito-tools.js', __FILE__) , array( 'jquery' ) );
     }
 
     public function deleteGameMetadata( $postId ) {

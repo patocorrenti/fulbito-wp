@@ -1,0 +1,15 @@
+{
+    "name": "pcorrenti/fulbito",
+    "autoload": {
+        "psr-4": {
+            "PCorrenti\\Fulbito\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pato Correnti",
+            "email": "patocorrenti@gmail.com"
+        }
+    ],
+    "require": {}
+}
