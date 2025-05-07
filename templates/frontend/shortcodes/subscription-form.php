@@ -8,11 +8,11 @@
 <?php
 // Totals
 $registered = 0;
-$equipados  = 0;
+$onTeam  = 0;
 if( is_array( $players ) ){
     foreach($players as $player){
         if( $player->participa) $registered++;
-        if( $player->equipo ) $equipados++;
+        if( $player->equipo ) $onTeam++;
     }
 }
 ?>
@@ -51,7 +51,7 @@ if( is_array( $players ) ){
 
     <!-- COMPLETED -->
     <?php if( $registered === 10 ):?>
-        <?php if( $equipados === 10 ): ?>
+        <?php if( $onTeam === 10 ): ?>
             <h4 class="teams-title"><?php _e('Equipos', 'fulbito') ?></h4>
             <table class="team_table">
                 <thead class="header">
@@ -124,7 +124,7 @@ if( is_array( $players ) ){
     <?php endif;?>
 
     <!-- SUBSCRIPTORS LIST -->
-    <?php if( $registered && $equipados !== 10 ) : ?>
+    <?php if( $registered && $onTeam !== 10 ) : ?>
         <h4 class="subscriptors-title">Inscriptos (<?php echo $registered;?>)</h4>
         <ul class="subscriptors-list">
             <?php foreach($players as $player): if( $player->participa ):  ?>
