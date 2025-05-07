@@ -28,7 +28,7 @@ class Frontend extends Commons {
     }
 
     public function enqueue_scripts() {
-        wp_enqueue_script( 'fontsAwesome', plugins_url('assets/vendor/fontsawesome/js/all.min.js', __FILE__));
+        wp_enqueue_script( 'fontsAwesome', plugins_url('../assets/vendor/fontsawesome/js/all.min.js', __FILE__));
     }
 
     public function addSingleGameMetadata($content) {
