@@ -22,7 +22,7 @@ if( is_array( $players ) ){
     <!-- DATE -->
     <?php if ($game->fecha) : ?>
         <h2 class="date">
-            <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
+            <?php esc_html_e(date_i18n(get_option('date_format'), strtotime($game->fecha))) ?>
         </h2>
     <?php endif ?>
 
@@ -30,37 +30,37 @@ if( is_array( $players ) ){
     <?php if( $registered < 10 ): ?>
         <form action="" method="post" class="subscription-form">
             <input type="hidden" name="validancia" value="">
-            <input type="hidden" name="partido" value="<?php echo get_the_ID(); ?>" >
+            <input type="hidden" name="partido" value="<?php esc_attr_e(get_the_ID()); ?>" >
             <label for="jugador">Jugador:</label>
             <select name="jugador" id="jugador">
                 <?php foreach( $players as $player ): if( !$player->participa ): ?>
-                    <option value="<?php echo $player->id; ?>">
-                        <?php echo $player->nombre; ?>
+                    <option value="<?php esc_attr_e($player->id); ?>">
+                        <?php esc_html_e($player->nombre); ?>
                     </option>
                 <?php endif; endforeach; ?>
             </select>
             <br>
             <?php wp_nonce_field( 'ft_subscribe_player') ?>
-            <input type="submit" name="inscribir" value="<?php _e('Inscribir', 'fulbito') ?>">
+            <input type="submit" name="inscribir" value="<?php esc_attr_e('Inscribir', 'fulbito') ?>">
         </form>
     <?php else: ?>
         <p class="closed">
-            <?php _e('La inscripci&oacute;n cerr&oacute;, te quedaste afuera.', 'fulbito') ?>
+            <?php esc_html_e('La inscripci&oacute;n cerr&oacute;, te quedaste afuera.', 'fulbito') ?>
         </p>
     <?php endif;?>
 
     <!-- COMPLETED -->
     <?php if( $registered === 10 ):?>
         <?php if( $onTeam === 10 ): ?>
-            <h4 class="teams-title"><?php _e('Equipos', 'fulbito') ?></h4>
+            <h4 class="teams-title"><?php esc_html_e('Equipos', 'fulbito') ?></h4>
             <table class="team_table">
                 <thead class="header">
                     <tr>
                         <th width="50%">
-                            <?php _e('Equipo A (Blanco)', 'fulbito') ?>
+                            <?php esc_html_e('Equipo A (Blanco)', 'fulbito') ?>
                         </th>
                         <th width="50%">
-                            <?php _e('Equipo B (Coco)', 'fulbito') ?>
+                            <?php esc_html_e('Equipo B (Coco)', 'fulbito') ?>
                         </th>
                     </tr>
                 </thead>
@@ -73,8 +73,8 @@ if( is_array( $players ) ){
                                     <?php if($player->equipo == 1 && $player->participa ): ?>
                                         <?php $promediosEquipo[0][] = $player->promedio; ?>
                                         <li>
-                                            <?php echo $player->nombre; ?>
-                                            (<?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>)
+                                            <?php esc_html_e($player->nombre); ?>
+                                            (<?php esc_html_e(($player->promedio) ? $player->promedio : 'ns') ;?>)
                                         </li>
                                     <?php endif; ?>
                                 <?php endforeach ?>
@@ -86,7 +86,7 @@ if( is_array( $players ) ){
                                 $prom_equipo = array_sum($promediosEquipo[0])/count($promediosEquipo[0]);
                             ?>
                                 <p class="team_average">
-                                    <?php echo number_format((float)$prom_equipo, 2, '.', ''); ?>
+                                    <?php esc_html_e(number_format((float)$prom_equipo, 2, '.', '')); ?>
                                 </p>
                             <?php endif; ?>
                         </td>
@@ -96,8 +96,8 @@ if( is_array( $players ) ){
                                     <?php if($player->equipo == 2 && $player->participa ): ?>
                                         <?php $promediosEquipo[1][] = $player->promedio; ?>
                                         <li>
-                                            <?php echo $player->nombre; ?>
-                                            (<?php echo ($player->promedio) ? $player->promedio : 'ns' ;?>)
+                                            <?php esc_html_e($player->nombre); ?>
+                                            (<?php esc_html_e(($player->promedio) ? $player->promedio : 'ns') ;?>)
                                         </li>
                                     <?php endif; ?>
                                 <?php endforeach ?>
@@ -109,7 +109,7 @@ if( is_array( $players ) ){
                                 $prom_equipo = array_sum($promediosEquipo[1])/count($promediosEquipo[1]);
                             ?>
                                 <p class="team_average">
-                                    <?php echo number_format((float)$prom_equipo, 2, '.', ''); ?>
+                                    <?php esc_html_e(number_format((float)$prom_equipo, 2, '.', '')); ?>
                                 </p>
                             <?php endif; ?>
                         </td>
@@ -118,30 +118,30 @@ if( is_array( $players ) ){
             </table>
         <?php else: ?>
             <p class="no_teams">
-               <?php _e('No hay equipos todav&iacute;a.', 'fulbito') ?>
+               <?php esc_html_e('No hay equipos todav&iacute;a.', 'fulbito') ?>
             </p>
         <?php endif;?>
     <?php endif;?>
 
     <!-- SUBSCRIPTORS LIST -->
     <?php if( $registered && $onTeam !== 10 ) : ?>
-        <h4 class="subscriptors-title">Inscriptos (<?php echo $registered;?>)</h4>
+        <h4 class="subscriptors-title"><?php esc_html_e('Inscriptos', 'fulbito') ?> (<?php esc_html_e($registered);?>)</h4>
         <ul class="subscriptors-list">
             <?php foreach($players as $player): if( $player->participa ):  ?>
                 <li>
-                    <?php print_r($player->nombre); ?>
+                    <?php esc_html_e($player->nombre); ?>
                     <?php if($player->lesion): ?>
                         <i class="fa fa-wheelchair" aria-hidden="true"></i>
                     <?php elseif($player->favorito): ?>
                         <i class="fa fa-star" aria-hidden="true"></i>
                     <?php endif; ?>
-                    (<?php print_r($player->promedio) ?>)
+                    (<?php esc_html_e($player->promedio) ?>)
                 </li>
             <?php endif; endforeach;?>
         </ul>
     <?php elseif( !$registered ) : ?>
         <p class="no_subscriptors">
-            <?php _e('No hay inscriptos todav&iacute;a', 'fulbito') ?>
+            <?php esc_html_e('No hay inscriptos todav&iacute;a', 'fulbito') ?>
         </p>
     <?php endif; ?>
 <?php endwhile;?>

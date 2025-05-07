@@ -7,7 +7,7 @@
 <div class="fulbito teams list">
 <?php if ($game->fecha) : ?>
     <p class="date">
-        <?php echo date_i18n(get_option('date_format'), strtotime($game->fecha)) ?>
+        <?php esc_html_e(date_i18n(get_option('date_format'), strtotime($game->fecha))) ?>
     </p>
 <?php endif ?>
 <?php if ($game->resultado) : ?>
@@ -32,8 +32,8 @@
                 <?php foreach ($players as $player): ?>
                     <?php if($player->equipo == 1 && $player->participa ): ?>
                     <li>
-                        <?php echo $player->nombre; ?>
-                        <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
+                        <?php esc_html_e($player->nombre); ?>
+                        <?= ($player->promedio) ? '('.esc_html($player->promedio).')' : ''; ?>
                         <?php if($player->suspendido): ?>
                             <i class="fas fa-ban"></i>
                         <?php endif;?>
@@ -47,8 +47,8 @@
                     <?php foreach ($players as $player): ?>
                         <?php if($player->equipo == 2 && $player->participa ): ?>
                         <li>
-                            <?php echo $player->nombre; ?>
-                            <?php echo ($player->promedio) ? '('.$player->promedio.')' : ''; ?>
+                            <?php esc_html_e($player->nombre); ?>
+                            <?= ($player->promedio) ? '('.esc_html($player->promedio).')' : ''; ?>
                             <?php if($player->suspendido): ?>
                                 <i class="fas fa-ban"></i>
                             <?php endif;?>
