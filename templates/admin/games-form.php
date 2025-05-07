@@ -11,7 +11,7 @@
                 <h3>
                     <?php _e('Fecha', 'fulbito') ?>
                 </h3>
-                <input type="date" name="fecha" value="<?php echo $game->fecha ?>"/>
+                <input type="date" name="fecha" value="<?= esc_attr($game->fecha) ?>"/>
             </td>
         </tr>
         <tr>
@@ -27,21 +27,21 @@
                     <div style="max-height: 550px; overflow-y: auto;">
                         <?php foreach($players as $player): ?>
                             <p>
-                                <label for="<?php echo 'participa_'.$player->id ?>">
-                                    <input  id="<?php echo 'participa_'.$player->id ?>"
-                                            name="participantes[]"
-                                            value="<?php echo $player->id ?>"
-                                            type="checkbox"
-                                            data-favorito="<?php echo $player->favorito; ?>"
-                                            data-nombre="<?php echo $player->nombre; ?>"
-                                            data-promedio="<?php echo $player->promedio;?>"
-                                            <?php if($player->participa): ?>
-                                                checked
-                                                data-equipo="<?php echo $player->equipo; // esto es para carga inicial de equipos via JS ?>"
-                                            <?php endif; ?>
-
+                                <label for="<?= esc_attr('participa_'.$player->id) ?>">
+                                    <input 
+                                        id="<?= esc_attr('participa_'.$player->id) ?>"
+                                        name="participantes[]"
+                                        value="<?= esc_attr($player->id) ?>"
+                                        type="checkbox"
+                                        data-favorito="<?= esc_attr($player->favorito) ?>"
+                                        data-nombre="<?= esc_attr($player->nombre) ?>"
+                                        data-promedio="<?= esc_attr($player->promedio) ?>"
+                                        <?php if($player->participa): ?>
+                                            checked
+                                            data-equipo="<?= esc_attr($player->equipo) //Initial team load via JS ?>"
+                                        <?php endif; ?>
                                     >
-                                    <?php echo($player->nombre); ?>
+                                    <?= esc_html($player->nombre) ?>
                                 </label>
                             </p>
                         <?php endforeach; ?>
@@ -119,15 +119,16 @@
                 <fieldset id="suspendidos">
                     <?php foreach($players as $player): ?>
                         <?php if($player->participa): ?>
-                            <p data-id="<?php echo $player->id; ?>">
-                                <label for="suspendido_<?php echo $player->id;?>">
-                                    <input  type="checkbox"
-                                            name="suspendido[<?php echo $player->id;?>]"
-                                            value="<?php echo $player->id; ?>"
-                                            id="suspendido_<?php echo $player->id;?>"
-                                            <?php if($player->suspendido) echo 'checked'; ?>
+                            <p data-id="<?= esc_attr($player->id) ?>">
+                                <label for="suspendido_<?= esc_attr($player->id) ?>">
+                                    <input 
+                                        type="checkbox"
+                                        name="suspendido[<?= esc_attr($player->id) ?>]"
+                                        value="<?= esc_attr($player->id) ?>"
+                                        id="suspendido_<?= esc_attr($player->id) ?>"
+                                        <?php if($player->suspendido) echo 'checked' ?>
                                     >
-                                    <?php echo $player->nombre; ?>
+                                    <?= esc_html($player->nombre) ?>
                                 </label>
                             </p>
                         <?php endif; ?>

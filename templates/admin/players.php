@@ -66,33 +66,33 @@
                     <tr class="editar_fila">
                         <td>
                             <span>
-                                <?php echo $player->id ?>
+                                <?= esc_html($player->id) ?>
                             </span>
                         </td>
                         <td class="editable">
                             <input
                                 type="text"
-                                name="jugadores[<?php echo $player->id; ?>][nombre]"
-                                value="<?php echo($player->nombre); ?>"
+                                name="jugadores[<?= esc_attr($player->id) ?>][nombre]"
+                                value="<?= esc_attr($player->nombre) ?>"
                                 required
                             />
                         </td>
                         <td class="editable">
                             <input
                                 type="email"
-                                name="jugadores[<?php echo $player->id; ?>][email]"
-                                value="<?php echo($player->email); ?>"
+                                name="jugadores[<?= esc_attr($player->id) ?>][email]"
+                                value="<?= esc_attr($player->email) ?>"
                             />
                         </td>
                         <td class="editable">
                             <input
                                 type="date"
-                                name="jugadores[<?php echo $player->id; ?>][nacimiento]"
-                                value="<?php echo($player->nacimiento); ?>"
+                                name="jugadores[<?= esc_attr($player->id) ?>][nacimiento]"
+                                value="<?= esc_attr($player->nacimiento) ?>"
                             />
                         </td>
                         <td class="editable">
-                            <select name="jugadores[<?php echo $player->id; ?>][favorito]">
+                            <select name="jugadores[<?= esc_attr($player->id) ?>][favorito]">
                                 <option value="1" <?php if($player->favorito) echo 'selected'; ?> >
                                     <?php _e('Si', 'fulbito') ?>
                                 </option>
@@ -102,7 +102,7 @@
                             </select>
                         </td>
                         <td class="editable">
-                            <select name="jugadores[<?php echo $player->id; ?>][lesion]">
+                            <select name="jugadores[<?= esc_attr($player->id) ?>][lesion]">
                                 <option value="1" <?php if($player->lesion) echo 'selected'; ?> >
                                     <?php _e('Si', 'fulbito') ?>
                                 </option>
@@ -112,7 +112,7 @@
                             </select>
                         </td>
                         <td class="editable">
-                            <select name="jugadores[<?php echo $player->id; ?>][activo]">
+                            <select name="jugadores[<?= esc_attr($player->id) ?>][activo]">
                                 <option value="1" <?php if($player->activo) echo 'selected'; ?>>
                                     <?php _e('Si', 'fulbito') ?>
                                 </option>
