@@ -82,17 +82,13 @@ class Frontend extends Commons {
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
             $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
 
-            ob_start();
-            $this->ft_get_template(
+            return $this->ft_template(
                 'frontend/shortcodes/subscription-form',
                 ['game_query' => $game_query, 'players' => $players, 'game' => $game]
             );
-            return ob_get_clean();
             
         else:
-            ob_start();
-            $this->ft_get_template('frontend/shortcodes/no-game');
-            return ob_get_clean();
+            return $this->ft_template('frontend/shortcodes/no-game');
         endif;
     }
 
