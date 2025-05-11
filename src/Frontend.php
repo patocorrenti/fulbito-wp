@@ -90,9 +90,9 @@ class Frontend extends Commons {
             return ob_get_clean();
             
         else:
-            echo '<p>';
-                _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');
-            echo '</p>';
+            ob_start();
+            $this->ft_get_template('frontend/shortcodes/no-game');
+            return ob_get_clean();
         endif;
     }
 
