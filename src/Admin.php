@@ -14,8 +14,6 @@ class Admin extends Commons {
 
         $this->FulbitoDB = $FulbitoDB;
 
-        // Enable Plugin
-        register_activation_hook( __FILE__, [$this, 'fulbito_tools_activate']);
         // Disable Plugin
         register_deactivation_hook( __FILE__, [$this, 'fulbito_tools_deactivate']);
 
@@ -43,10 +41,7 @@ class Admin extends Commons {
         add_action('delete_post', [$this, 'deleteGameMetadata']);
     }
 
-    public function fulbito_tools_activate() {
-        $this->FulbitoDB->install();
-    }
-
+    // TODO: Not yet implemented
     function fulbito_tools_deactivate() {
         $this->FulbitoDB->uninstall();
     }

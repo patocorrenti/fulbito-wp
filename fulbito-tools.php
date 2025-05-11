@@ -47,4 +47,10 @@ if (get_option('enable_api') === 'on') {
     new APIExtend($FulbitoDB);
 }
 
+function fulbito_activate() {
+    $FulbitoDB = new DB();
+    $FulbitoDB->install();
+}
+register_activation_hook(__FILE__, 'PCorrenti\Fulbito\fulbito_activate');
+
 ?>

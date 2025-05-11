@@ -81,12 +81,14 @@ class Frontend extends Commons {
             $game_query = new \WP_Query( $args );
             $players = $this->FulbitoDB->getJugadores( $prox_partido->partidoID, 1 );
             $game = $this->FulbitoDB->getPartido($prox_partido->partidoID)[0];
+
             ob_start();
             $this->ft_get_template(
                 'frontend/shortcodes/subscription-form',
                 ['game_query' => $game_query, 'players' => $players, 'game' => $game]
             );
             return ob_get_clean();
+            
         else:
             echo '<p>';
                 _e('Todav&iacute;a no se carg&oacute; el pr&oacute;ximo partido, perro!.','fulbito');
