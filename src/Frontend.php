@@ -36,10 +36,8 @@ class Frontend extends Commons {
 
         $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
         $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
-        ob_start();
-        $this->ft_get_template('frontend/single-game', ['players' => $players, 'game' => $game]);
-
-        return $content . ob_get_clean();
+        
+        return $content . $this->ft_template('frontend/single-game', ['players' => $players, 'game' => $game]);
     }
 
     public function addListsGameMetadata($content) {
@@ -48,27 +46,23 @@ class Frontend extends Commons {
 
         $players = $this->FulbitoDB->getJugadores(get_the_ID(), 1);
         $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
-        ob_start();
-        $this->ft_get_template('frontend/list-game', ['players' => $players, 'game' => $game]);
 
-        return $content . ob_get_clean();
+        return $content . $this->ft_template('frontend/list-game', ['players' => $players, 'game' => $game]);
     }
 
     public function shortcode_positionsTable() {
         if (!get_query_var('ft_show_profile')) :
             $tabla = $this->FulbitoDB->getTabla();
-            ob_start();
-            $this->ft_get_template('frontend/shortcodes/positions-table', ['tabla' => $tabla]);
-            return ob_get_clean();
+
+            return $this->ft_template('frontend/shortcodes/positions-table', ['tabla' => $tabla]);
         else :
             $playerID = get_query_var('ft_show_profile');
             $jugador_ficha = $this->FulbitoDB->getFichaJugador($playerID);
-            ob_start();
-            $this->ft_get_template(
+            
+            return $this->ft_template(
                 'frontend/shortcodes/player-profile',
                 ['jugador_ficha' => $jugador_ficha]
             );
-            return ob_get_clean();
         endif;
     }
 

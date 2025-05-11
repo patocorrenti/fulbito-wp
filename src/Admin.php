@@ -130,7 +130,8 @@ class Admin extends Commons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        $this->ft_get_template('admin/players', ['players' => $players]);
+        
+        $this->ft_admin_template('admin/players', ['players' => $players]);
     }
 
     public function addSettingsPage() {
@@ -156,7 +157,7 @@ class Admin extends Commons {
 
         // Show players list
         $players = $this->FulbitoDB->getJugadores();
-        $this->ft_get_template('admin/settings', ['players' => $players]);
+        $this->ft_admin_template('admin/settings', ['players' => $players]);
     }
 
     public function addGameForm($post){
@@ -166,7 +167,7 @@ class Admin extends Commons {
         $players = $this->FulbitoDB->getJugadores($post->ID);
         $game = $this->FulbitoDB->getPartido($post->ID)[0];
 
-        $this->ft_get_template('admin/games-form', ['players' => $players, 'game' => $game]);
+        $this->ft_admin_template('admin/games-form', ['players' => $players, 'game' => $game]);
     }
 
     public function saveGameMetadata($postId) {
