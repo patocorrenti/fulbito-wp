@@ -14,7 +14,7 @@ class Commons {
         include( file_exists($themePath) ? $themePath : $fullPath );
     }
 
-    public function ft_template( $path, $args = [] ) {
+    public function ft_template( $path, $templateArgs = [] ) {
         ob_start();
         // 3rd party theme template path
         $themePath = get_template_directory() . '/fulbito/' . $path . '.php';
