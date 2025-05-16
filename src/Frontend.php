@@ -20,6 +20,7 @@ class Frontend extends Commons {
         add_filter( 'the_content', [$this, 'addSingleGameMetadata']);
         // Game - lists - Add metadata
         add_filter( 'the_content', [$this, 'addListsGameMetadata']);
+        add_filter('get_the_excerpt', [$this, 'forceFullContent'], 10, 2);
         // Add shortcodes
         add_shortcode('fulbito_tabla', [$this,'shortcode_positionsTable']);
         add_shortcode('fulbito_inscripcion', [$this,'shortcode_subscriptionForm']);
@@ -48,6 +49,13 @@ class Frontend extends Commons {
         $game = $this->FulbitoDB->getPartido(get_the_ID())[0];
 
         return $content . $this->ft_template('frontend/list-game', ['players' => $players, 'game' => $game]);
+    }
+
+    public function forceFullContent($excerpt, $post) {
+        if ($post->post_type === 'ft_partidos') {
+            return apply_filters('the_content', $post->post_content);
+        }
+        return $excerpt;
     }
 
     public function shortcode_positionsTable() {
